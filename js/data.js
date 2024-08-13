@@ -19,7 +19,7 @@ const generateRoom = () => ({
       lat: getRandomInteger(35.65, 35.7, 5),
       lng: getRandomInteger(139.7, 139.8, 5),
     },
-    price: getRandomInteger(1000, 10000),
+    price: getRandomInteger(2000, 10000),
     type: getRandomArrayElement(TYPE_LOCATION),
     rooms: getRandomInteger(1, 5),
     guests: getRandomInteger(1, 10),
