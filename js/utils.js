@@ -41,7 +41,7 @@ const getRandomInteger = (beginingRange, endRange, qtyAfterPoint = 0) => {
 
 const CreateUniqUser = () => {
   const i = getRandomInteger(1, 10);
-  return i < 10 ? `0${i}` : i;
+  return i < 10 ? `0${i}`: i;
 };
 
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
