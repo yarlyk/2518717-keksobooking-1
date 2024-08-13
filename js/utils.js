@@ -60,7 +60,7 @@ function getRandomArray(array) {
     previousValues.push(currentValue);
   }
   return previousValues;
-};
+}
 
 export{getRandomArray};
 export{getRandomArrayElement};
