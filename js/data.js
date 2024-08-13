@@ -36,11 +36,11 @@ const generateRoom = () => ({
 });
 
 const getArrayRooms = (lengthArray) => {
-  let arrayRooms = [];
+  let rooms = [];
   for (let i = 0; i < lengthArray; i++) {
-    array.push(generateRoom());
+    rooms.push(generateRoom());
   }
-  return arrayRooms;
+  return rooms;
 };
 
 export{getArrayRooms};
