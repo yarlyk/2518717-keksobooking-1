@@ -86,12 +86,6 @@ const generateRoom = () => ({
   },
 });
 
-const generateRooms = (lengthArray) => {
-  const rooms = [];
-  for (let i = 0; i < lengthArray; i++) {
-    rooms.push(generateRoom());
-  }
-  return rooms;
-};
+const generateRooms = Array.from({ length: 10 }, generateRoom);
 
 export{ generateRooms };
