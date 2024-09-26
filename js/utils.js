@@ -14,7 +14,9 @@ const createUniqUser = () => {
 
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
-function getRandomArray(array) {
+const getRandomObjectElement = (elementsValues, elements) => elementsValues[getRandomArrayElement(elements)];
+
+const getRandomArray = (array) => {
   const previousValues = [];
   const lengthArray = getRandomInteger(1, array.length);
   let currentValue = array[getRandomInteger(0, array.length - 1)];
@@ -28,6 +30,6 @@ function getRandomArray(array) {
     previousValues.push(currentValue);
   }
   return previousValues;
-}
+};
 
-export{ getRandomArray, getRandomArrayElement, getRandomInteger, createUniqUser };
+export{ getRandomArray, getRandomArrayElement, getRandomInteger, createUniqUser, getRandomObjectElement };

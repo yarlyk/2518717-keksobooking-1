@@ -1,3 +1,3 @@
-import { generateRooms } from './data.js';
+import './data.js';
+import './generateMarkup.js';
 
-generateRooms();

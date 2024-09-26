@@ -1,6 +1,15 @@
-import { getRandomInteger, getRandomArrayElement, getRandomArray, createUniqUser } from './utils.js';
+import { getRandomInteger, getRandomArrayElement, getRandomArray, createUniqUser, getRandomObjectElement } from './utils.js';
 
 const TYPE_LOCATION = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
+
+const TYPE_LOCATION_NAMED = {
+  palace: 'Дворец',
+  flat: 'Квартира',
+  house: 'Дом',
+  bungalow: 'Бунгало',
+  hotel: 'Отель',
+};
+
 const TIME_CHECK = ['12:00', '13:00', '14:00'];
 const TYPE_FEATURES = [
   'wifi',
@@ -26,8 +35,8 @@ const PHOTO_ROOMS = [
 ];
 
 const TITLE_ROOMS = [
-  'Лучший номер10',
-  'Лучшее сочетание "Цена-качество"',
+  'Лучший номер 10',
+  'Cочетание "Цена-качество"',
   'Наш дивиз - "Чистота и забота!"',
   'Ваш отдых - наше призвание!',
   'Три номера по цене двух!',
@@ -38,11 +47,11 @@ const PRICE_MIN = 1000;
 
 const PRICE_MAX = 10000;
 
-const ROOMS_MIN = 1;
+const ROOMS_MIN = 2;
 
 const ROOMS_MAX = 5;
 
-const GUESTS_MIN = 1;
+const GUESTS_MIN = 2;
 
 const MAX_GUESTS = 10;
 
@@ -56,10 +65,6 @@ const LOCATION_LNG_MAX = 139.8;
 
 const LOCATION_ACCURACY = 5;
 
-const locationLat = getRandomInteger(LOCATION_LAT_MIN, LOCATION_LAT_MAX, LOCATION_ACCURACY);
-
-const locationLng = getRandomInteger(LOCATION_LNG_MIN, LOCATION_LNG_MAX, LOCATION_ACCURACY);
-
 const generateRoom = () => ({
   author: {
     avatar: `img/avatars/user${createUniqUser()}.png`,
@@ -67,11 +72,11 @@ const generateRoom = () => ({
   offer: {
     title: getRandomArrayElement(TITLE_ROOMS),
     address: {
-      lat: locationLat,
-      lng: locationLng,
+      lat: getRandomInteger(LOCATION_LAT_MIN, LOCATION_LAT_MAX, LOCATION_ACCURACY),
+      lng: getRandomInteger(LOCATION_LNG_MIN, LOCATION_LNG_MAX, LOCATION_ACCURACY),
     },
     price: getRandomInteger(PRICE_MIN, PRICE_MAX),
-    type: getRandomArrayElement(TYPE_LOCATION),
+    type: getRandomObjectElement(TYPE_LOCATION_NAMED, TYPE_LOCATION),
     rooms: getRandomInteger(ROOMS_MIN, ROOMS_MAX),
     guests: getRandomInteger(GUESTS_MIN, MAX_GUESTS),
     checkin: getRandomArrayElement(TIME_CHECK),
@@ -80,12 +85,12 @@ const generateRoom = () => ({
     description: getRandomArrayElement(DESCRIPTION_ROOMS),
     photos: getRandomArray(PHOTO_ROOMS),
     location: {
-      lat: locationLat,
-      lng: locationLng,
+      lat: getRandomInteger(LOCATION_LAT_MIN, LOCATION_LAT_MAX, LOCATION_ACCURACY),
+      lng: getRandomInteger(LOCATION_LNG_MIN, LOCATION_LNG_MAX, LOCATION_ACCURACY),
     },
   },
 });
 
-const generateRooms = Array.from({ length: 10 }, generateRoom);
+const generateRooms = (count) => Array.from({ length: count }, generateRoom);
 
 export{ generateRooms };
