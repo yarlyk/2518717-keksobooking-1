@@ -38,4 +38,6 @@ for (let i = 0; i < PHOTO_ROOMS.length; i++) {
   roomElement.querySelector('.popup__photos').append(photoElement);
 }
 
+roomElement.querySelector('.popup__avatar').src = anotherRoom[0].author.avatar;
+
 roomsList.appendChild(roomElement);
