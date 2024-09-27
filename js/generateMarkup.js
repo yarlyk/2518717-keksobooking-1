@@ -25,7 +25,17 @@ featureList.forEach((featureListItem) => {
     roomElement.querySelector('.popup__features').appendChild(featureListItem);
   }
 });
-
 roomElement.querySelector('.popup__description').textContent = anotherRoom[0].offer.description;
+
+const PHOTO_ROOMS = anotherRoom[0].offer.photos;
+const photoTamplate = roomTamplate.querySelector('.popup__photo');
+
+roomElement.querySelector('.popup__photos').innerHTML = '';
+
+for (let i = 0; i < PHOTO_ROOMS.length; i++) {
+  const photoElement = photoTamplate.cloneNode(true);
+  photoElement.src = PHOTO_ROOMS[i];
+  roomElement.querySelector('.popup__photos').append(photoElement);
+}
 
 roomsList.appendChild(roomElement);
