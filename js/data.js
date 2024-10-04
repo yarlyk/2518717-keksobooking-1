@@ -2,14 +2,6 @@ import { getRandomInteger, getRandomArrayElement, getRandomArray, createUniqUser
 
 const TYPE_LOCATION = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
 
-const TYPE_LOCATION_NAMED = {
-  palace: 'Дворец',
-  flat: 'Квартира',
-  house: 'Дом',
-  bungalow: 'Бунгало',
-  hotel: 'Отель',
-};
-
 const TIME_CHECK = ['12:00', '13:00', '14:00'];
 const TYPE_FEATURES = [
   'wifi',
@@ -76,7 +68,7 @@ const generateRoom = () => ({
       lng: getRandomInteger(LOCATION_LNG_MIN, LOCATION_LNG_MAX, LOCATION_ACCURACY),
     },
     price: getRandomInteger(PRICE_MIN, PRICE_MAX),
-    type: getRandomObjectElement(TYPE_LOCATION_NAMED, TYPE_LOCATION),
+    type: getRandomObjectElement(TYPE_LOCATION),
     rooms: getRandomInteger(ROOMS_MIN, ROOMS_MAX),
     guests: getRandomInteger(GUESTS_MIN, MAX_GUESTS),
     checkin: getRandomArrayElement(TIME_CHECK),

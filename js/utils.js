@@ -14,7 +14,15 @@ const createUniqUser = () => {
 
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
-const getRandomObjectElement = (elementsValues, elements) => elementsValues[getRandomArrayElement(elements)];
+const TypeLocationNamed = {
+  PALACE: 'Дворец',
+  FLAT: 'Квартира',
+  HOUSE: 'Дом',
+  BUNGALOW: 'Бунгало',
+  HOTEL: 'Отель',
+};
+
+const getRandomObjectElement = (elements) => TypeLocationNamed[getRandomArrayElement(elements)];
 
 const getRandomArray = (array) => {
   const previousValues = [];
