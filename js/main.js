@@ -1,3 +1,5 @@
+import {renderPopup} from './generate-markup.js';
 import { generateRooms } from './data.js';
 
-generateRooms();
+const estateObjects = generateRooms(1);
+renderPopup (estateObjects[0]);
