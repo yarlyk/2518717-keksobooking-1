@@ -1,6 +1,10 @@
 const roomsList = document.querySelector('#map-canvas');
 const roomTamplate = document.querySelector('#card').content.querySelector('.popup');
 
+/**
+ * Заполняет описание карточки объявления
+ * @param { object } realty - объект с данными карточки объявления
+ */
 const renderPopup = (realty) => {
   const roomElement = roomTamplate.cloneNode(true);
 
