@@ -57,6 +57,10 @@ const LOCATION_LNG_MAX = 139.8;
 
 const LOCATION_ACCURACY = 5;
 
+/**
+ * Создает объект со случайными данными из диапазона
+ * @returns - объект
+ */
 const generateRoom = () => ({
   author: {
     avatar: `img/avatars/user${createUniqUser()}.png`,
@@ -83,6 +87,11 @@ const generateRoom = () => ({
   },
 });
 
+/**
+ * Создаёт массив объектов со случайными данными
+ * @param { number } count - число объектов в массиве
+ * @returns - массив с объектами
+ */
 const generateRooms = (count) => Array.from({ length: count }, generateRoom);
 
 export{ generateRooms };
