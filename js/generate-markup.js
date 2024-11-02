@@ -42,7 +42,7 @@ const renderPopup = (realty) => {
 
   roomElement.querySelector('.popup__avatar').src = avatar;
 
-  roomsList.appendChild(roomElement);
+  roomsList.append(roomElement);
 };
 
 export { renderPopup };
