@@ -39,11 +39,11 @@ const PRICE_MIN = 1000;
 
 const PRICE_MAX = 10000;
 
-const ROOMS_MIN = 2;
+const ROOMS_MIN = 1;
 
 const ROOMS_MAX = 5;
 
-const GUESTS_MIN = 2;
+const GUESTS_MIN = 1;
 
 const MAX_GUESTS = 10;
 
@@ -59,7 +59,7 @@ const LOCATION_ACCURACY = 5;
 
 /**
  * Создает объект со случайными данными из диапазона
- * @returns - объект
+ * @returns { Object } - объект
  */
 const generateRoom = () => ({
   author: {
@@ -90,7 +90,7 @@ const generateRoom = () => ({
 /**
  * Создаёт массив объектов со случайными данными
  * @param { number } count - число объектов в массиве
- * @returns - массив с объектами
+ * @returns { Array } - массив с объектами
  */
 const generateRooms = (count) => Array.from({ length: count }, generateRoom);
 

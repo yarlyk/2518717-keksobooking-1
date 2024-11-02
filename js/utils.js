@@ -3,7 +3,7 @@
  * @param { number } beginingRange - минимальное число диапазона
  * @param { number } endRange - максимальное число диапазона
  * @param { number } qtyAfterPoint - количество цыфр после запятой
- * @returns - возвращает случайное число из диапазона с заданным количеством цыфр после запятой
+ * @returns { number } - возвращает случайное число из диапазона с заданным количеством цыфр после запятой
  */
 const getRandomInteger = (beginingRange, endRange, qtyAfterPoint = 0) => {
   let i;
@@ -16,7 +16,7 @@ const getRandomInteger = (beginingRange, endRange, qtyAfterPoint = 0) => {
 
 /**
  * Возвращает уникальный двузначный номер пользователя
- * @returns - возвращает число из диапазона и, если оно менее 10, то добавляет 0 впереди
+ * @returns { number } - возвращает число из диапазона и, если оно менее 10, то добавляет 0 впереди
  */
 const createUniqUser = () => {
   const i = getRandomInteger(1, 10);
@@ -47,8 +47,8 @@ const getRandomObjectElement = (elements) => TypeLocationNamed[getRandomArrayEle
 
 /**
  * Получает новый массив со случайными данными из исходного массива
- * @param { array } array - массив с исходными данными
- * @returns - возвращает массив со случайными данными из исходного массива
+ * @param { Array } array - массив с исходными данными
+ * @returns { Array } - возвращает массив со случайными данными из исходного массива
  */
 const getRandomArray = (array) => {
   const previousValues = [];
