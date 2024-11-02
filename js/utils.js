@@ -25,8 +25,8 @@ const createUniqUser = () => {
 
 /**
  * Получает случайный элемент массива
- * @param { array } elements - любой массив
- * @returns - возвращает рандомный элемент из массива
+ * @param { Array } elements - любой массив
+ * @returns { * } - возвращает рандомный элемент из массива
  */
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
@@ -40,8 +40,8 @@ const TypeLocationNamed = {
 
 /**
  * Преобразует наименование типа помещения на русский язык
- * @param { array } elements - массив с ключами объекта TypeLocationNamed
- * @returns - возвращает тип помещения на русском языке
+ * @param { Array } elements - массив с ключами объекта TypeLocationNamed
+ * @returns { string } - возвращает тип помещения на русском языке
  */
 const getRandomObjectElement = (elements) => TypeLocationNamed[getRandomArrayElement(elements)];
 
