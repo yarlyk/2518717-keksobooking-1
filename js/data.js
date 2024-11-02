@@ -1,6 +1,6 @@
 import { getRandomInteger, getRandomArrayElement, getRandomArray, createUniqUser, getRandomObjectElement } from './utils.js';
 
-const TYPE_LOCATION = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
+const TYPE_LOCATION = ['PALACE', 'FLAT', 'HOUSE', 'BUNGALOW', 'HOTEL'];
 
 const TIME_CHECK = ['12:00', '13:00', '14:00'];
 const TYPE_FEATURES = [

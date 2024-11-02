@@ -7,17 +7,17 @@ const roomTamplate = document.querySelector('#card').content.querySelector('.pop
  */
 const renderPopup = (realty) => {
   const roomElement = roomTamplate.cloneNode(true);
+  const { offer: { title, price, type, checkin, checkout, address: { lat, lng }, rooms, guests, features, description, photos }, author: { avatar } } = realty;
 
-  roomElement.querySelector('.popup__title').textContent = realty.offer.title;
-  roomElement.querySelector('.popup__text--address').textContent = `${realty.offer.address.lat}, ${realty.offer.address.lng}`;
-  roomElement.querySelector('.popup__text--price').textContent = `${realty.offer.price} ₽/ночь`;
-  roomElement.querySelector('.popup__type').textContent = realty.offer.type;
-  const qtyRooms = realty.offer.rooms;
-  roomElement.querySelector('.popup__text--capacity').textContent = `${qtyRooms} ${qtyRooms < 5 ? 'комнаты' : 'комнат'} для ${realty.offer.guests} гостей`;
-  roomElement.querySelector('.popup__text--time').textContent = `Заезд после ${realty.offer.checkin}, выезд до ${realty.offer.checkout}`;
+  roomElement.querySelector('.popup__title').textContent = title;
+  roomElement.querySelector('.popup__text--address').textContent = `${lat}, ${lng}`;
+  roomElement.querySelector('.popup__text--price').textContent = `${price} ₽/ночь`;
+  roomElement.querySelector('.popup__type').textContent = type;
+  roomElement.querySelector('.popup__text--capacity').textContent = `${rooms} ${rooms < 5 ? 'комнаты' : 'комнат'} для ${guests} гостей`;
+  roomElement.querySelector('.popup__text--time').textContent = `Заезд после ${checkin}, выезд до ${checkout}`;
 
   const featureList = roomTamplate.querySelectorAll('.popup__feature');
-  const FEATURES = realty.offer.features;
+  const FEATURES = features;
   roomElement.querySelector('.popup__features').innerHTML = '';
   featureList.forEach((featureListItem) => {
     const isNecessary = FEATURES.some(
@@ -27,9 +27,9 @@ const renderPopup = (realty) => {
       roomElement.querySelector('.popup__features').appendChild(featureListItem);
     }
   });
-  roomElement.querySelector('.popup__description').textContent = realty.offer.description;
+  roomElement.querySelector('.popup__description').textContent = description;
 
-  const PHOTO_ROOMS = realty.offer.photos;
+  const PHOTO_ROOMS = photos;
   const photoTamplate = roomTamplate.querySelector('.popup__photo');
 
   roomElement.querySelector('.popup__photos').innerHTML = '';
@@ -40,7 +40,7 @@ const renderPopup = (realty) => {
     roomElement.querySelector('.popup__photos').append(photoElement);
   }
 
-  roomElement.querySelector('.popup__avatar').src = realty.author.avatar;
+  roomElement.querySelector('.popup__avatar').src = avatar;
 
   roomsList.appendChild(roomElement);
 };
