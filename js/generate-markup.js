@@ -1,9 +1,34 @@
 const roomsList = document.querySelector('#map-canvas');
 const roomTamplate = document.querySelector('#card').content.querySelector('.popup');
 
+const qtyGuests = ['гостя', 'гостей'];
+const qtyRooms = ['комната', 'комнаты', 'комнат'];
+
 /**
- * Заполняет описание карточки объявления
- * @param { object } realty - объект с данными карточки объявления
+ * Выбирает из мвссива слово нужного склонения
+ * @param { Array } arr - массив со словами разного склонения
+ * @param { number } element - случайное число из диапазона
+ * @returns { string } возвращает слово нужного склонения
+ */
+const getDeclension = (arr, element) => {
+  if (arr.length < 3) {
+    if (element > 1) {
+      return arr[1];
+    }
+    return arr[0];
+  }
+  if (element === 1) {
+    return arr[0];
+  }
+  if (element > 1 && element < 5) {
+    return arr[1];
+  }
+  return arr[2];
+};
+
+/**
+ * Заполняет описание карточки объявления и вставляет его в DOM
+ * @param { Object } realty - объект с данными карточки объявления
  */
 const renderPopup = (realty) => {
   const roomElement = roomTamplate.cloneNode(true);
@@ -13,7 +38,7 @@ const renderPopup = (realty) => {
   roomElement.querySelector('.popup__text--address').textContent = `${lat}, ${lng}`;
   roomElement.querySelector('.popup__text--price').textContent = `${price} ₽/ночь`;
   roomElement.querySelector('.popup__type').textContent = type;
-  roomElement.querySelector('.popup__text--capacity').textContent = `${rooms} ${rooms < 5 ? 'комнаты' : 'комнат'} для ${guests} гостей`;
+  roomElement.querySelector('.popup__text--capacity').textContent = `${rooms} ${getDeclension(qtyRooms, rooms)} для ${guests} ${getDeclension(qtyGuests, guests)}`;
   roomElement.querySelector('.popup__text--time').textContent = `Заезд после ${checkin}, выезд до ${checkout}`;
 
   const featureList = roomTamplate.querySelectorAll('.popup__feature');
