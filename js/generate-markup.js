@@ -26,6 +26,22 @@ const getDeclension = (arr, element) => {
   return arr[2];
 };
 
+const morpher = new Morpher();
+morpher.russian.spell(235, 'рубль').then(
+  result => {
+    // console.log(result['n']['родительный']);    // двухсот тридцати пяти
+    // console.log(result.n.genitive);             // двухсот тридцати пяти
+    console.log(result.n.genitive + ' ' + result.unit.genitive);
+    // console.log(result['unit']['родительный']); // рублей
+    // console.log(result.unit.genitive);          // рублей
+  }
+);
+morpher.getQueriesLeft().then(
+  result => {
+    console.log(result); // 100
+  }
+);
+
 /**
  * Заполняет описание карточки объявления и вставляет его в DOM
  * @param { Object } realty - объект с данными карточки объявления
