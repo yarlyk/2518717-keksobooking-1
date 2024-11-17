@@ -11,16 +11,17 @@ const qtyRooms = ['комната', 'комнаты', 'комнат'];
  * @returns { string } возвращает слово нужного склонения
  */
 const getDeclension = (arr, element) => {
+  const lastDigit = element % 10;
   if (arr.length < 3) {
     if (element > 1) {
       return arr[1];
     }
     return arr[0];
   }
-  if (element === 1) {
+  if (lastDigit === 1 && element !== 11) {
     return arr[0];
   }
-  if (element > 1 && element < 5) {
+  if (lastDigit > 1 && lastDigit < 5 && element !== 12 && element !== 13 && element !== 14) {
     return arr[1];
   }
   return arr[2];
