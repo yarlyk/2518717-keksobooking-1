@@ -4,6 +4,8 @@ const priceInput = document.querySelector('#price');
 const typeHousingSelect = document.querySelector('#type');
 const quantityRooms = document.querySelector('#room_number');
 const quantityGuests = document.querySelector('#capacity');
+const timeIn = document.querySelector('#timein');
+const timeOut = document.querySelector('#timeout');
 
 // Объект с минимальными ценами для каждого типа жилья
 const MinPrices = {
@@ -113,3 +115,24 @@ const updateGuestConstraints = () => {
 
 // Обработчик изменения количества комнат
 quantityRooms.addEventListener('change', updateGuestConstraints);
+
+/**
+ * Функция для синхронизации значений полей Время заезда и Время выезда
+ * @param { * } event - представляет собой любое событие, которое происходит в DOM
+ */
+const syncTimes = (event) => {
+  const selectedValue = event.target.value;
+
+  // Если изменяется timein, обновляем timeout
+  if (event.target.id === 'timein') {
+    timeOut.value = selectedValue;
+  }
+  // Если изменяется timeout, обновляем timein
+  else if (event.target.id === 'timeout') {
+    timeIn.value = selectedValue;
+  }
+};
+
+// Добавляем обработчики событий для обоих полей
+timeIn.addEventListener('change', syncTimes);
+timeOut.addEventListener('change', syncTimes);
