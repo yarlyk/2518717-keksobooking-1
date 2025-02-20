@@ -16,7 +16,7 @@ const MinPrices = {
  * Экземпляр для валидации с объктом config в качестве второго параметра
  * @param { * } validatingForm - элемент формы для валидации
  * @param { object } config - объект с настройками валидации для формы
- * @param { boolean } false - по умолчанию true, определяет производить валидацию по мере ввода или по нажатию кнопки "Отправить"
+ * @param { boolean } - не заполнено (по умолчанию true), определяет производить валидацию по мере ввода или по нажатию кнопки "Отправить"
  */
 const pristine = new Pristine(validatingForm, {
   // class of the parent element where the error/success class is added
@@ -29,7 +29,7 @@ const pristine = new Pristine(validatingForm, {
   errorTextTag: 'div',
   // class of the error text element
   errorTextClass: 'text-help'
-}, false);
+},);
 
 /**
  * Валидация по событию нажатие кнопки "Отправить"
