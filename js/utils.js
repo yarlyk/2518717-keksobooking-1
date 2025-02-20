@@ -30,6 +30,7 @@ const createUniqUser = () => {
  */
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
+// Объкт для преобразования значений выбора в теге <select id="type" name="type"> на русский язык.
 const TypeLocationNamed = {
   PALACE: 'Дворец',
   FLAT: 'Квартира',
