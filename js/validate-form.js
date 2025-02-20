@@ -123,12 +123,9 @@ quantityRooms.addEventListener('change', updateGuestConstraints);
 const syncTimes = (event) => {
   const selectedValue = event.target.value;
 
-  // Если изменяется timein, обновляем timeout
   if (event.target.id === 'timein') {
     timeOut.value = selectedValue;
-  }
-  // Если изменяется timeout, обновляем timein
-  else if (event.target.id === 'timeout') {
+  } else if (event.target.id === 'timeout') {
     timeIn.value = selectedValue;
   }
 };
