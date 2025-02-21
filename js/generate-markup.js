@@ -1,23 +1,49 @@
 const roomsList = document.querySelector('#map-canvas');
 const roomTamplate = document.querySelector('#card').content.querySelector('.popup');
 
+const qtyGuests = ['гостя', 'гостей'];
+const qtyRooms = ['комната', 'комнаты', 'комнат'];
+
 /**
- * Заполняет описание карточки объявления
- * @param { object } realty - объект с данными карточки объявления
+ * Выбирает из мвссива слово нужного склонения
+ * @param { Array } arr - массив со словами разного склонения
+ * @param { number } element - случайное число из диапазона
+ * @returns { string } возвращает слово нужного склонения
+ */
+const getDeclension = (arr, element) => {
+  const lastDigit = element % 10;
+  if (arr.length < 3) {
+    if (element > 1) {
+      return arr[1];
+    }
+    return arr[0];
+  }
+  if (lastDigit === 1 && element !== 11) {
+    return arr[0];
+  }
+  if (lastDigit > 1 && lastDigit < 5 && element !== 12 && element !== 13 && element !== 14) {
+    return arr[1];
+  }
+  return arr[2];
+};
+
+/**
+ * Заполняет описание карточки объявления и вставляет его в DOM
+ * @param { Object } realty - объект с данными карточки объявления
  */
 const renderPopup = (realty) => {
   const roomElement = roomTamplate.cloneNode(true);
+  const { offer: { title, price, type, checkin, checkout, address: { lat, lng }, rooms, guests, features, description, photos }, author: { avatar } } = realty;
 
-  roomElement.querySelector('.popup__title').textContent = realty.offer.title;
-  roomElement.querySelector('.popup__text--address').textContent = `${realty.offer.address.lat}, ${realty.offer.address.lng}`;
-  roomElement.querySelector('.popup__text--price').textContent = `${realty.offer.price} ₽/ночь`;
-  roomElement.querySelector('.popup__type').textContent = realty.offer.type;
-  const qtyRooms = realty.offer.rooms;
-  roomElement.querySelector('.popup__text--capacity').textContent = `${qtyRooms} ${qtyRooms < 5 ? 'комнаты' : 'комнат'} для ${realty.offer.guests} гостей`;
-  roomElement.querySelector('.popup__text--time').textContent = `Заезд после ${realty.offer.checkin}, выезд до ${realty.offer.checkout}`;
+  roomElement.querySelector('.popup__title').textContent = title;
+  roomElement.querySelector('.popup__text--address').textContent = `${lat}, ${lng}`;
+  roomElement.querySelector('.popup__text--price').textContent = `${price} ₽/ночь`;
+  roomElement.querySelector('.popup__type').textContent = type;
+  roomElement.querySelector('.popup__text--capacity').textContent = `${rooms} ${getDeclension(qtyRooms, rooms)} для ${guests} ${getDeclension(qtyGuests, guests)}`;
+  roomElement.querySelector('.popup__text--time').textContent = `Заезд после ${checkin}, выезд до ${checkout}`;
 
   const featureList = roomTamplate.querySelectorAll('.popup__feature');
-  const FEATURES = realty.offer.features;
+  const FEATURES = features;
   roomElement.querySelector('.popup__features').innerHTML = '';
   featureList.forEach((featureListItem) => {
     const isNecessary = FEATURES.some(
@@ -27,9 +53,9 @@ const renderPopup = (realty) => {
       roomElement.querySelector('.popup__features').appendChild(featureListItem);
     }
   });
-  roomElement.querySelector('.popup__description').textContent = realty.offer.description;
+  roomElement.querySelector('.popup__description').textContent = description;
 
-  const PHOTO_ROOMS = realty.offer.photos;
+  const PHOTO_ROOMS = photos;
   const photoTamplate = roomTamplate.querySelector('.popup__photo');
 
   roomElement.querySelector('.popup__photos').innerHTML = '';
@@ -40,9 +66,9 @@ const renderPopup = (realty) => {
     roomElement.querySelector('.popup__photos').append(photoElement);
   }
 
-  roomElement.querySelector('.popup__avatar').src = realty.author.avatar;
+  roomElement.querySelector('.popup__avatar').src = avatar;
 
-  roomsList.appendChild(roomElement);
+  roomsList.append(roomElement);
 };
 
 export { renderPopup };
