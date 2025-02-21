@@ -1,3 +1,5 @@
+import './utils.js';
+
 // Находим элементы формы
 const validatingForm = document.querySelector('.ad-form');
 const priceInput = document.querySelector('#price');
@@ -9,11 +11,11 @@ const timeOut = document.querySelector('#timeout');
 
 // Объект с минимальными ценами для каждого типа жилья
 const MinPrices = {
-  PALACE: 10000,
-  FLAT: 1000,
-  HOUSE: 5000,
-  BUNGALOW: 0,
-  HOTEL: 3000,
+  PALACE: [10000, 'дворца', '10 000'],
+  FLAT: [1000, 'квартиры', '1 000'],
+  HOUSE: [5000, 'дома', '5 000'],
+  BUNGALOW: [0, 'бунгало', '0'],
+  HOTEL: [3000, 'отеля', '3 000']
 };
 
 /**
@@ -53,18 +55,19 @@ validatingForm.addEventListener('submit', (evt) => {
  * @param { Function } - третий параметр валидатора - текст ошибки, реализован анонимной функцией
  */
 pristine.addValidator(priceInput, (value) => {
-  const minPrice = MinPrices[typeHousingSelect.value];
+  const minPrice = MinPrices[typeHousingSelect.value][0];
   return value >= minPrice;
 }, () => {
-  const minPrice = MinPrices[typeHousingSelect.value];
-  return `Минимальная цена для выбранного типа жилья ${minPrice} рублей`;
+  const minPrice = MinPrices[typeHousingSelect.value][2];
+  const typeHousing = MinPrices[typeHousingSelect.value][1];
+  return `Мин. цена для ${typeHousing} ${minPrice} руб.`;
 });
 
 /**
  * Функция для обновления атрибутов min и placeholder в теге <input id="price" name="price"> и перевалидации (для удаления предыдущего сообщения об ошибке) после изменения значений атрибутов с указанием сообщения пользователю о несоответствие введённого значения требуемому
  */
 const updatePriceConstraints = () => {
-  const minPrice = MinPrices[typeHousingSelect.value];
+  const minPrice = MinPrices[typeHousingSelect.value][0];
   // Устанавливаем минимальное значение для валидации
   priceInput.min = minPrice;
   // Обновляем плейсхолдер
