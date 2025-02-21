@@ -1,5 +1,3 @@
-import './utils.js';
-
 // Находим элементы формы
 const validatingForm = document.querySelector('.ad-form');
 const priceInput = document.querySelector('#price');
@@ -79,6 +77,10 @@ const updatePriceConstraints = () => {
 // Обработчик изменения выбора типа жилья
 typeHousingSelect.addEventListener('change', updatePriceConstraints);
 
+//Определяем переменные для валидации комнат "Не для гостей"
+const notForGuests = 0;
+const qntyRoomsNotForGuests = 100;
+const singleRoom = 1;
 /**
  * Валидация поля "Количество мест" в зависимости от значения поля "Количество комнат"
  * @param { * } quantityGuests - элемент формы для валидации
@@ -88,21 +90,21 @@ typeHousingSelect.addEventListener('change', updatePriceConstraints);
  */
 pristine.addValidator(quantityGuests, (value) => {
   const maxGuests = Number(quantityRooms.value);
-  if (maxGuests === 100 && Number(value) !== 0 || maxGuests !== 100 && Number(value) === 0) {
+  if (maxGuests === qntyRoomsNotForGuests && Number(value) !== notForGuests || maxGuests !== qntyRoomsNotForGuests && Number(value) === notForGuests) {
     return false;
-  } else if (maxGuests === 100 && Number(value) === 0) {
+  } else if (maxGuests === qntyRoomsNotForGuests && Number(value) === notForGuests) {
     return true;
   } else {
     return Number(value) <= maxGuests;
   }
 }, (value) => {
   const maxGuests = Number(quantityRooms.value);
-  if (maxGuests === 100 && Number(value) !== 0) {
+  if (maxGuests === qntyRoomsNotForGuests && Number(value) !== notForGuests) {
     return 'Это не для гостей';
-  } else if (maxGuests === 1 && Number(value) !== 0) {
+  } else if (maxGuests === singleRoom && Number(value) !== notForGuests) {
     return 'Количество гостей в одной комнате не может быть больше одного';
-  } else if (maxGuests !== 100 && Number(value) === 0) {
-    return 'Необходимо указать соответствующее количество комнат (100 комнат)';
+  } else if (maxGuests !== qntyRoomsNotForGuests && Number(value) === notForGuests) {
+    return `Необходимо указать соответствующее количество комнат (${qntyRoomsNotForGuests} комнат)`;
   } else {
     return `Количество гостей в ${maxGuests} комнатах не может быть больше ${maxGuests}`;
   }
