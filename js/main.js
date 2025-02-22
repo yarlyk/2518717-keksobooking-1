@@ -1,7 +1,8 @@
 import {renderPopup} from './generate-markup.js';
 import { generateRooms } from './data.js';
 import { disableForm, enableForm, disableFiltr, enableFiltr } from './control-form.js';
-import { validatorForm } from './validate-form.js';
+import './validate-form.js';
+import './map.js';
 
 const estateObjects = generateRooms(1);
 renderPopup (estateObjects[0]);
@@ -11,5 +12,3 @@ enableForm();
 
 disableFiltr();
 enableFiltr();
-
-validatorForm();
