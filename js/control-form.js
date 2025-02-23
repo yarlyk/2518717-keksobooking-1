@@ -25,7 +25,7 @@ const enableForm = () => {
 /**
  * Деактивирует форму фильтра
  */
-const disableFiltr = () => {
+const disableFilter = () => {
   document.querySelector('.map__filters').classList.add('ad-form--disabled');
   const findedElement = document.querySelector('.map__filters');
   let fieldSets = findedElement.querySelectorAll('fieldset');
@@ -41,7 +41,7 @@ const disableFiltr = () => {
 /**
  * Активирует форму фильтра
  */
-const enableFiltr = () => {
+const enableFilter = () => {
   document.querySelector('.map__filters').classList.remove('ad-form--disabled');
   const findedElement = document.querySelector('.map__filters');
   let fieldSets = findedElement.querySelectorAll('fieldset');
@@ -54,4 +54,4 @@ const enableFiltr = () => {
   });
 };
 
-export{ disableForm, enableForm, disableFiltr, enableFiltr };
+export{ disableForm, enableForm, disableFilter, enableFilter };
