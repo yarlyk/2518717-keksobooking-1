@@ -1,5 +1,5 @@
 import { enableForm } from './control-form.js';
-import { estateObjects } from "./main.js";
+import { estateObjects } from './main.js';
 
 const initMap = () => {
   const addressMarker = document.querySelector('#address');
