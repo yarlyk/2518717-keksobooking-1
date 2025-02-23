@@ -1,4 +1,5 @@
 import { enableForm } from './control-form.js';
+import { estateObjects } from "./main.js";
 
 const initMap = () => {
   const addressMarker = document.querySelector('#address');
@@ -35,14 +36,30 @@ const initMap = () => {
       draggable: true,
       icon: mainPinIcon
     },
-  );
-
-  marker.addTo(map);
+  ).addTo(map);
 
   marker.on('moveend', (evt) => {
     const geoMarker = evt.target.getLatLng();
     addressMarker.value = `${geoMarker.lat} ${geoMarker.lng}`;
   });
+
+  const ordinaryIcon = L.icon({
+    iconUrl: './img/pin.svg',
+    iconSize: [52, 52],
+    iconAnchor: [26, 52],
+  });
+
+  const randomAddress = L.marker(
+    {
+      lat: estateObjects[0].offer.address.lat,
+      lng: estateObjects[0].offer.address.lng
+    },
+    {
+    //   draggable: true,
+      icon: ordinaryIcon
+    },
+  );
+  randomAddress.addTo(map);
 };
 
 export { initMap };

@@ -6,12 +6,14 @@ import { initMap } from './map.js';
 
 disableForm();
 
-initMap();
-
 validatingFormSubmit();
 
 const estateObjects = generateRooms(1);
 renderPopup (estateObjects[0]);
 
+initMap();
+
 disableFiltr();
 enableFiltr();
+
+export { estateObjects };
