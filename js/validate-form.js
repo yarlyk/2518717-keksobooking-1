@@ -40,10 +40,13 @@ const pristine = new Pristine(validatingForm, {
  * @param { Event } 'submit' - отправка формы
  * @param { Function } handler - обработчик события
  */
-validatingForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  pristine.validate();
-});
+
+const validatingFormSubmit = () => {
+  validatingForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    pristine.validate();
+  });
+};
 
 /**
  * Валидация поля "Цена за ночь"
@@ -138,3 +141,5 @@ const syncTimes = (event) => {
 // Добавляем обработчики событий для обоих полей
 timeIn.addEventListener('change', syncTimes);
 timeOut.addEventListener('change', syncTimes);
+
+export { validatingFormSubmit };
