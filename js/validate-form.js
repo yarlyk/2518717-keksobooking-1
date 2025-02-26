@@ -1,22 +1,9 @@
-import './utils.js';
-
 // Находим элементы формы
 const validatingForm = document.querySelector('.ad-form');
-const priceInput = document.querySelector('#price');
-const typeHousingSelect = document.querySelector('#type');
 const quantityRooms = document.querySelector('#room_number');
 const quantityGuests = document.querySelector('#capacity');
 const timeIn = document.querySelector('#timein');
 const timeOut = document.querySelector('#timeout');
-
-// Объект с минимальными ценами для каждого типа жилья
-const MinPrices = {
-  PALACE: [10000, 'дворца', '10 000'],
-  FLAT: [1000, 'квартиры', '1 000'],
-  HOUSE: [5000, 'дома', '5 000'],
-  BUNGALOW: [0, 'бунгало', '0'],
-  HOTEL: [3000, 'отеля', '3 000']
-};
 
 /**
  * Экземпляр для валидации с объктом config в качестве второго параметра
@@ -42,43 +29,18 @@ const pristine = new Pristine(validatingForm, {
  * @param { Event } 'submit' - отправка формы
  * @param { Function } handler - обработчик события
  */
-validatingForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  pristine.validate();
-});
 
-/**
- * Валидация поля "Цена за ночь"
- * @param { * } priceInput - элемент формы для валидации
- * @param { Function } handler - обработчик валидации
- * @param { number } value - значение из поля "Цена за ночь" в обработчике валидации
- * @param { Function } - третий параметр валидатора - текст ошибки, реализован анонимной функцией
- */
-pristine.addValidator(priceInput, (value) => {
-  const minPrice = MinPrices[typeHousingSelect.value][0];
-  return value >= minPrice;
-}, () => {
-  const minPrice = MinPrices[typeHousingSelect.value][2];
-  const typeHousing = MinPrices[typeHousingSelect.value][1];
-  return `Мин. цена для ${typeHousing} ${minPrice} руб.`;
-});
-
-/**
- * Функция для обновления атрибутов min и placeholder в теге <input id="price" name="price"> и перевалидации (для удаления предыдущего сообщения об ошибке) после изменения значений атрибутов с указанием сообщения пользователю о несоответствие введённого значения требуемому
- */
-const updatePriceConstraints = () => {
-  const minPrice = MinPrices[typeHousingSelect.value][0];
-  // Устанавливаем минимальное значение для валидации
-  priceInput.min = minPrice;
-  // Обновляем плейсхолдер
-  priceInput.placeholder = `${minPrice}`;
-  pristine.reset(priceInput);
-  pristine.validate(priceInput);
+const validatingFormSubmit = () => {
+  validatingForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    pristine.validate();
+  });
 };
 
-// Обработчик изменения выбора типа жилья
-typeHousingSelect.addEventListener('change', updatePriceConstraints);
-
+//Определяем переменные для валидации комнат "Не для гостей"
+const notForGuests = 0;
+const qntyRoomsNotForGuests = 100;
+const singleRoom = 1;
 /**
  * Валидация поля "Количество мест" в зависимости от значения поля "Количество комнат"
  * @param { * } quantityGuests - элемент формы для валидации
@@ -88,21 +50,21 @@ typeHousingSelect.addEventListener('change', updatePriceConstraints);
  */
 pristine.addValidator(quantityGuests, (value) => {
   const maxGuests = Number(quantityRooms.value);
-  if (maxGuests === 100 && Number(value) !== 0 || maxGuests !== 100 && Number(value) === 0) {
+  if (maxGuests === qntyRoomsNotForGuests && Number(value) !== notForGuests || maxGuests !== qntyRoomsNotForGuests && Number(value) === notForGuests) {
     return false;
-  } else if (maxGuests === 100 && Number(value) === 0) {
+  } else if (maxGuests === qntyRoomsNotForGuests && Number(value) === notForGuests) {
     return true;
   } else {
     return Number(value) <= maxGuests;
   }
 }, (value) => {
   const maxGuests = Number(quantityRooms.value);
-  if (maxGuests === 100 && Number(value) !== 0) {
+  if (maxGuests === qntyRoomsNotForGuests && Number(value) !== notForGuests) {
     return 'Это не для гостей';
-  } else if (maxGuests === 1 && Number(value) !== 0) {
+  } else if (maxGuests === singleRoom && Number(value) !== notForGuests) {
     return 'Количество гостей в одной комнате не может быть больше одного';
-  } else if (maxGuests !== 100 && Number(value) === 0) {
-    return 'Необходимо указать соответствующее количество комнат (100 комнат)';
+  } else if (maxGuests !== qntyRoomsNotForGuests && Number(value) === notForGuests) {
+    return `Необходимо указать соответствующее количество комнат (${qntyRoomsNotForGuests} комнат)`;
   } else {
     return `Количество гостей в ${maxGuests} комнатах не может быть больше ${maxGuests}`;
   }
@@ -136,3 +98,5 @@ const syncTimes = (event) => {
 // Добавляем обработчики событий для обоих полей
 timeIn.addEventListener('change', syncTimes);
 timeOut.addEventListener('change', syncTimes);
+
+export { validatingFormSubmit };

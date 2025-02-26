@@ -59,7 +59,7 @@ const LOCATION_ACCURACY = 5;
 
 /**
  * Создает объект со случайными данными из диапазона
- * @returns { Object } - объект
+ * @returns { Object } - объект со случайными данными из диапазона
  */
 const generateRoom = () => ({
   author: {

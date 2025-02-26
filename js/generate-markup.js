@@ -71,4 +71,4 @@ const renderPopup = (realty) => {
   roomsList.append(roomElement);
 };
 
-export { renderPopup };
+export { renderPopup, qtyGuests, qtyRooms, getDeclension };
