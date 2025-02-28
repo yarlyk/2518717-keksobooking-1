@@ -4,6 +4,10 @@ const quantityRooms = document.querySelector('#room_number');
 const quantityGuests = document.querySelector('#capacity');
 const timeIn = document.querySelector('#timein');
 const timeOut = document.querySelector('#timeout');
+//Определяем переменные для валидации комнат "Не для гостей"
+const notForGuests = 0;
+const qntyRoomsNotForGuests = 100;
+const singleRoom = 1;
 
 /**
  * Экземпляр для валидации с объктом config в качестве второго параметра
@@ -37,10 +41,6 @@ const validatingFormSubmit = () => {
   });
 };
 
-//Определяем переменные для валидации комнат "Не для гостей"
-const notForGuests = 0;
-const qntyRoomsNotForGuests = 100;
-const singleRoom = 1;
 /**
  * Валидация поля "Количество мест" в зависимости от значения поля "Количество комнат"
  * @param { * } quantityGuests - элемент формы для валидации
@@ -78,9 +78,6 @@ const updateGuestConstraints = () => {
   pristine.validate(quantityGuests);
 };
 
-// Обработчик изменения количества комнат
-quantityRooms.addEventListener('change', updateGuestConstraints);
-
 /**
  * Функция для синхронизации значений полей Время заезда и Время выезда
  * @param { * } event - представляет собой любое событие, которое происходит в DOM
@@ -95,7 +92,9 @@ const syncTimes = (event) => {
   }
 };
 
-// Добавляем обработчики событий для обоих полей
+// Обработчик изменения количества комнат
+quantityRooms.addEventListener('change', updateGuestConstraints);
+// Обработчики событий для полей "Время заезда и выезда"
 timeIn.addEventListener('change', syncTimes);
 timeOut.addEventListener('change', syncTimes);
 
