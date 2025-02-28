@@ -1,5 +1,38 @@
 import { enableForm, enableFilter } from './control-form.js';
-import { qtyGuests, qtyRooms, getDeclension } from './generate-markup.js';
+
+const roomTamplate = document.querySelector('#card').content.querySelector('.popup');
+const qtyGuests = ['гостя', 'гостей'];
+const qtyRooms = ['комната', 'комнаты', 'комнат'];
+const TypeLocationNamed = {
+  palace: 'Дворец',
+  flat: 'Квартира',
+  house: 'Дом',
+  bungalow: 'Бунгало',
+  hotel: 'Отель',
+};
+
+/**
+ * Выбирает из мвссива слово нужного склонения
+ * @param { Array } arr - массив со словами разного склонения
+ * @param { number } element - случайное число из диапазона
+ * @returns { string } возвращает слово нужного склонения
+ */
+const getDeclension = (arr, element) => {
+  const lastDigit = element % 10;
+  if (arr.length < 3) {
+    if (element > 1) {
+      return arr[1];
+    }
+    return arr[0];
+  }
+  if (lastDigit === 1 && element !== 11) {
+    return arr[0];
+  }
+  if (lastDigit > 1 && lastDigit < 5 && element !== 12 && element !== 13 && element !== 14) {
+    return arr[1];
+  }
+  return arr[2];
+};
 
 /**
  * Создаёт карту с метками
@@ -36,7 +69,7 @@ const initMap = (apartments) => {
     iconAnchor: [26, 52],
   });
 
-  //Создание главной метки
+  //Создание главной метки и добавляем её на карту
   const marker = L.marker(
     {
       lat: 35.6854195988901,
@@ -62,50 +95,63 @@ const initMap = (apartments) => {
   });
 
   /**
-   * Перебираем массив со случайными удобствами и создаёт строку с набором тегов по шаблону с добавлением этих удобств
-   * @param { Array } features - массив со случайным набором удобств
-   * @returns строку с тегами для передачи в createCustomPopup
-   */
-  const renderFeatures = (features) => {
-    let featuresString = '';
-    features.forEach((feature) => {
-      featuresString += `<li class="popup__feature popup__feature--${feature}"></li>`;
-    });
-    return featuresString;
+ * Заполняет описание карточки объявления и вставляет его в DOM
+ * @param { Object } point - объект с данными карточки объявления
+ */
+  const createCustomPopup = (point) => {
+    const roomElement = roomTamplate.cloneNode(true);
+    const { offer: { title, price, type, checkin, checkout, address, rooms, guests, features = [], description, photos }, author: { avatar } } = point;
+
+    // Заполняем текстовые поля
+    roomElement.querySelector('.popup__title').textContent = title;
+    roomElement.querySelector('.popup__text--address').textContent = address;
+    roomElement.querySelector('.popup__text--price').textContent = `${price} ₽/ночь`;
+    roomElement.querySelector('.popup__type').textContent = TypeLocationNamed[type];
+    roomElement.querySelector('.popup__text--capacity').textContent = `${rooms} ${getDeclension(qtyRooms, rooms)} для ${guests} ${getDeclension(qtyGuests, guests)}`;
+    roomElement.querySelector('.popup__text--time').textContent = `Заезд после ${checkin}, выезд до ${checkout}`;
+    roomElement.querySelector('.popup__description').textContent = description;
+
+    // Заполняем удобства
+    const featuresContainer = roomElement.querySelector('.popup__features');
+    featuresContainer.innerHTML = ''; // Очищаем контейнер
+
+    if (Array.isArray(features) && features.length > 0) {
+      features.forEach((feature) => {
+        const featureItem = document.createElement('li');
+        featureItem.classList.add('popup__feature', `popup__feature--${feature}`);
+        featuresContainer.appendChild(featureItem);
+      });
+    } else {
+      // Если features отсутствует или пустой, можно добавить сообщение или оставить контейнер пустым
+      const noFeaturesItem = document.createElement('li');
+      noFeaturesItem.textContent = 'Нет доступных удобств';
+      featuresContainer.appendChild(noFeaturesItem);
+    }
+
+    // Заполняем фотографии
+    const photosContainer = roomElement.querySelector('.popup__photos');
+    photosContainer.innerHTML = ''; // Очищаем контейнер
+    if (Array.isArray(photos) && photos.length > 0) {
+      photos.forEach((photo) => {
+        const photoElement = document.createElement('img');
+        photoElement.src = photo;
+        photoElement.classList.add('popup__photo');
+        photoElement.width = 45;
+        photoElement.height = 40;
+        photoElement.alt = 'Фотография жилья';
+        photosContainer.appendChild(photoElement);
+      });
+    }
+
+    // Устанавливаем аватар
+    roomElement.querySelector('.popup__avatar').src = avatar;
+
+    return roomElement;
   };
 
-  /**
-   * Перебираем массив со случайными ссылками на фотографии и создаёт строку с набором тегов по шаблону с добавлением этих ссылок
-   * @param { Array} photos - массив со случайным набором ссылок на фотографии
-   * @returns строку с тегами для передачи в createCustomPopup
-   */
-  const renderPhotos = (photos) => {
-    let photosString = '';
-    photos.forEach((photo) => {
-      photosString += `<div class="popup__photos" style = 'display: inline-block'><img src=${photo} class="popup__photo" width="45" height="40" alt="Фотография жилья"></div>`;
-    });
-    return photosString;
-  };
-
-  // Создание шаблона для генерации балуна обычных метов
-  const createCustomPopup = ({ offer: { title, price, type, checkin, checkout, address: { lat, lng }, rooms, guests, features, description, photos }, author: { avatar } }) => `<section class="popup">
-  <h3 class="popup__title">${title}</h3>
-  <p class="popup__text popup__text--address">Координаты: ${lat}, ${lng}</p>
-  <p class="popup__text popup__text--price">${price}<span>₽/ночь</span></p>
-  <h4 class="popup__type">${type}</h4>
-  <p class="popup__text popup__text--capacity">${rooms} ${getDeclension(qtyRooms, rooms)} для ${guests} ${getDeclension(qtyGuests, guests)}</p>
-  <p class="popup__text popup__text--time">Заезд после ${checkin}, выезд до ${checkout}</p>
-  <p class="popup__description">${description}</p>
-  <ul class="popup__features">
-    ${renderFeatures(features)}
-  </ul>
-    ${renderPhotos(photos)}
-  <img src=${avatar} class="popup__avatar" width="70" height="70" alt="Аватар пользователя">
-  </section>`;
-
-  // Создание обычных меок на карте из массива объектов
+  // Создание обычных меток на карте из массива объектов
   apartments.forEach((apartment) => {
-    const { offer: { address: { lat, lng }}} = apartment;
+    const { location: { lat, lng } } = apartment;
     const markerRandom = L.marker({
       lat,
       lng,

@@ -1,4 +1,4 @@
-import { generateRooms } from './data.js';
+// import { generateRooms } from './data.js';
 import { disableForm, disableFilter } from './control-form.js';
 import { initMap } from './map.js';
 import { createUiSlider} from './no-ui-slider.js';
@@ -9,13 +9,19 @@ disableForm();
 disableFilter();
 
 // Генерация массива со случайными объектами для заселения. Количество объктов передаём в качестве параметра
-const estateObjects = generateRooms(8);
+// const estateObjects = generateRooms(8);
 
 // Создаём карту с метками, и, в случае удачной инициализации, разблокируем фильтр и форму подачи объявления
-initMap(estateObjects);
+// initMap(estateObjects);
 
 //Вызываем слайдер на странице
 createUiSlider();
 
 // Вызываем валидацию формы подачи объявления
 validatingFormSubmit();
+
+fetch('https://28.javascript.htmlacademy.pro/keksobooking/data')
+  .then((response) => response.json())
+  .then((apartments) => {
+    initMap(apartments);
+  });
