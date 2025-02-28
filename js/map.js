@@ -3,6 +3,10 @@ import { enableForm, enableFilter } from './control-form.js';
 const roomTamplate = document.querySelector('#card').content.querySelector('.popup');
 const qtyGuests = ['гостя', 'гостей'];
 const qtyRooms = ['комната', 'комнаты', 'комнат'];
+const baseCoordinations = {
+  lat: 35.6854195988901,
+  lng: 139.7527348995209
+};
 const TypeLocationNamed = {
   palace: 'Дворец',
   flat: 'Квартира',
@@ -49,8 +53,8 @@ const initMap = (apartments) => {
       enableFilter(); // Фильтр активируется после загрузки карты
     })
     .setView({
-      lat: 35.6854195988901,
-      lng: 139.7527348995209
+      lat: baseCoordinations.lat,
+      lng: baseCoordinations.lng
     }, 12);
 
   // Указываем какая карта будет использована
@@ -72,8 +76,8 @@ const initMap = (apartments) => {
   //Создание главной метки и добавляем её на карту
   const marker = L.marker(
     {
-      lat: 35.6854195988901,
-      lng: 139.7527348995209
+      lat: baseCoordinations.lat,
+      lng: baseCoordinations.lng
     },
     {
       draggable: true,
