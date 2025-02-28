@@ -8,12 +8,6 @@ import { validatingFormSubmit } from './validate-form.js';
 disableForm();
 disableFilter();
 
-// Генерация массива со случайными объектами для заселения. Количество объктов передаём в качестве параметра
-// const estateObjects = generateRooms(8);
-
-// Создаём карту с метками, и, в случае удачной инициализации, разблокируем фильтр и форму подачи объявления
-// initMap(estateObjects);
-
 //Вызываем слайдер на странице
 createUiSlider();
 
