@@ -3,6 +3,7 @@ import { enableForm, enableFilter } from './control-form.js';
 const roomTamplate = document.querySelector('#card').content.querySelector('.popup');
 const qtyGuests = ['гостя', 'гостей'];
 const qtyRooms = ['комната', 'комнаты', 'комнат'];
+const mapScale = 13;
 const baseCoordinations = {
   lat: 35.6854195988901,
   lng: 139.7527348995209
@@ -55,7 +56,7 @@ const initMap = (apartments) => {
     .setView({
       lat: baseCoordinations.lat,
       lng: baseCoordinations.lng
-    }, 12);
+    }, mapScale);
 
   // Указываем какая карта будет использована
   L.tileLayer(
