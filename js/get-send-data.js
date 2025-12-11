@@ -1,6 +1,6 @@
 import {enableForm, enableFilter} from './control-form.js';
 
-const url = 'https://2.javascript.htmlacademy.pro/keksobooking';
+const url = 'https://28.javascript.htmlacademy.pro/keksobooking';
 const DataUrl = {
   GET_DATA_URL: `${url}/data`,
   SEND_DATA_URL: `${url}/`
