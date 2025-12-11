@@ -3,6 +3,10 @@ const DataUrl = {
   GET_DATA_URL: `${url}/data`,
   SEND_DATA_URL: `${url}/`
 };
+const TextErrorMessege = {
+  GET_DATA_ER: 'Не удаётся получить данные',
+  SEND_DATA_ER: 'Не удаётся отправить данные'
+};
 
 
 /**
@@ -41,7 +45,7 @@ const createLoader = () => fetch(DataUrl.GET_DATA_URL)
     return response.json();
   })
   .catch((error) => {
-    showError(`${error.message}`);
+    showError(TextErrorMessege.GET_DATA_ER);
     return [];
   });
 
