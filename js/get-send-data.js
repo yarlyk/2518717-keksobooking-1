@@ -7,7 +7,7 @@ const DataUrl = {
 };
 
 // Удаляем использование intervalId из текста ошибки
-const TextErrorMessege = {
+const TextErrorMessage = {
   GET_DATA_ER: 'Не удаётся получить данные. Обратитесь в поддержку',
   SEND_DATA_ER: 'Не удаётся отправить данные'
 };
@@ -95,7 +95,7 @@ const createLoader = () => fetch(DataUrl.GET_DATA_URL)
   })
   .catch((error) => {
     // Используем перехваченную ошибку для показа сообщения
-    showError(`${TextErrorMessege.GET_DATA_ER}`);
+    showError(`${TextErrorMessage.GET_DATA_ER}`);
     return [];
   });
 
