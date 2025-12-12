@@ -4,6 +4,13 @@ const quantityRooms = document.querySelector('#room_number');
 const quantityGuests = document.querySelector('#capacity');
 const timeIn = document.querySelector('#timein');
 const timeOut = document.querySelector('#timeout');
+const avatar = document.querySelector('#avatar');
+const fotoOfApartment = document.querySelector('#images');
+
+//Добавляем атрибут accept в загрузчики, чтобы только изображения п.3.7 ТЗ
+avatar.accept = "image/jpeg, image/png, image/gif, image/webp"
+fotoOfApartment.accept = "image/jpeg, image/png, image/gif, image/webp"
+
 //Определяем переменные для валидации комнат "Не для гостей"
 const notForGuests = 0;
 const qntyRoomsNotForGuests = 100;
