@@ -47,7 +47,7 @@ const showError = (message) => {
 
   /**
  * Функция для обновления текста обратного отсчёта
-  * @param {Number} timeLeft - время в миллисекундах, через которое сообщение самоуничтожится
+  * @param {Number} timeLeft - время в секундах, через которое сообщение самоуничтожится
  */
   const updateCountdown = () => {
     text2.textContent = `через ${timeLeft} сек.`;
@@ -60,7 +60,7 @@ const showError = (message) => {
     timeLeft--;
     updateCountdown();
 
-    // Останавливаем бесконечный setInterval при достижении 0
+    // Останавливаем бесконечный setInterval при достижении timeLeft 0
     if (timeLeft <= 0) {
       clearInterval(countdownInterval);
     }
