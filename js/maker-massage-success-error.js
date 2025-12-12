@@ -37,12 +37,21 @@ const showError = (message) => {
   // Объявляю переменную для обратного отсчёта
   let timeLeft = timeShowErrorMessage / 1000;
 
+  const text1 = document.createTextNode('Агент Хант, это сообщение самоуничтожится');
+  const text2 = document.createTextNode('');
+  const br = document.createElement('br');
+
+  timeElement.appendChild(text1);
+  timeElement.appendChild(br);
+  // timeElement.appendChild(text2);
+
   /**
  * Функция для обновления текста обратного отсчёта
   * @param {Number} timeLeft - время в миллисекундах, через которое сообщение самоуничтожится
  */
   const updateCountdown = () => {
-    timeElement.textContent = `Агент Хант, это сообщение самоуничтожится через ${timeLeft} сек.`;
+    text2.textContent = `через ${timeLeft} сек.`;
+    timeElement.appendChild(text2);
   };
 
   updateCountdown();
