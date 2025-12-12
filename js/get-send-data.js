@@ -1,4 +1,4 @@
-import {enableForm, enableFilter} from './control-form.js';
+import { enableForm } from './control-form.js';
 import { initMap } from './map.js';
 import { showError } from './maker-massage-success-error.js';
 
@@ -32,7 +32,6 @@ const loader = (route, method = Method.GET, body = null) => fetch(route, {method
   })
   .catch(() => {
     enableForm();
-    enableFilter();
     throw new Error();
   });
 
