@@ -17,8 +17,8 @@ const timeShowErrorMessage = 7000;
 const showError = (message) => {
   const errorTemplate = document.querySelector('#error').content.cloneNode(true);
   const errorElement = errorTemplate.querySelector('.error');
-  const errorMessage = errorElement.querySelector('.error__message'); // Для отображения поля сообщения
-  const errorButton = errorElement.querySelector('.error__button'); // Для отображения кнопки
+  const errorMessage = errorElement.querySelector('.error__message'); // Отображение поля сообщения
+  const errorButton = errorElement.querySelector('.error__button'); // Отображение кнопки
   const timeElement = document.createElement('div'); // Для отображения отсчета
 
   // Добавляем стили для элемента времени
@@ -43,7 +43,7 @@ const showError = (message) => {
 
   timeElement.appendChild(text1);
   timeElement.appendChild(br);
-  // timeElement.appendChild(text2);
+  timeElement.appendChild(text2);
 
   /**
  * Функция для обновления текста обратного отсчёта
@@ -51,7 +51,6 @@ const showError = (message) => {
  */
   const updateCountdown = () => {
     text2.textContent = `через ${timeLeft} сек.`;
-    timeElement.appendChild(text2);
   };
 
   updateCountdown();
