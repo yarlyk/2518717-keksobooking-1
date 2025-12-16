@@ -1,12 +1,12 @@
 
 // Задаем время показа сообщения об ошибке
-const timeShowErrorMessage = 7000;
+const timeShowMessage = 3000;
 
 /**
  * Функция для отображения ошибки с отсчетом времени
  * @param {String} message - текст ошибки
  */
-const showError = (message) => {
+const showMessage = (message) => {
   const errorTemplate = document.querySelector('#error').content.cloneNode(true);
   const errorElement = errorTemplate.querySelector('.error');
   const errorMessage = errorElement.querySelector('.error__message'); // Отображение поля сообщения
@@ -27,7 +27,7 @@ const showError = (message) => {
   errorMessage.appendChild(timeElement);
 
   // Объявляю переменную для обратного отсчёта
-  let timeLeft = timeShowErrorMessage / 1000;
+  let timeLeft = timeShowMessage / 1000;
 
   const text1 = document.createTextNode('Агент Хант, это сообщение самоуничтожится');
   const text2 = document.createTextNode('');
@@ -72,9 +72,7 @@ const showError = (message) => {
   // снимаем блокировку с фильтра и формы отправки объявления
   const autoRemoveTimeout = setTimeout(() => {
     errorElement.remove();
-    enableForm();
-    enableFilter();
-  }, timeShowErrorMessage);
+  }, timeShowMessage);
 
   // Очистка таймеров при удалении сообщения об ошибке
   errorElement.addEventListener('remove', () => {
@@ -83,4 +81,4 @@ const showError = (message) => {
   });
 };
 
-export { showError };
+export { showMessage };

@@ -6,15 +6,21 @@ const timeIn = document.querySelector('#timein');
 const timeOut = document.querySelector('#timeout');
 const avatarInput = document.querySelector('#avatar');
 const fotoOfApartment = document.querySelector('#images');
+const submitButton = document.querySelector('.ad-form__submit'); // Находим кнопку "Опубликовать"
 
 //Добавляем атрибут accept в загрузчики, чтобы только изображения п.3.7 ТЗ
-avatarInput.accept = "image/jpeg, image/png, image/gif, image/webp"
-fotoOfApartment.accept = "image/jpeg, image/png, image/gif, image/webp"
+avatarInput.accept = 'image/jpeg, image/png, image/gif, image/webp';
+fotoOfApartment.accept = 'image/jpeg, image/png, image/gif, image/webp';
 
 //Определяем переменные для валидации комнат "Не для гостей"
 const notForGuests = 0;
 const qntyRoomsNotForGuests = 100;
 const singleRoom = 1;
+
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = 'Размещаю...';
+};
 
 /**
  * Экземпляр для валидации с объктом config в качестве второго параметра
@@ -41,10 +47,14 @@ const pristine = new Pristine(validatingForm, {
  * @param { Function } handler - обработчик события
  */
 
-const validatingFormSubmit = () => {
+const validatingFormSubmit = (cb) => {
   validatingForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    pristine.validate();
+    const isValid = pristine.validate();
+    if (isValid) {
+      // blockSubmitButton();
+      cb(new FormData(validatingForm));
+    }
   });
 };
 
@@ -105,4 +115,4 @@ quantityRooms.addEventListener('change', updateGuestConstraints);
 timeIn.addEventListener('change', syncTimes);
 timeOut.addEventListener('change', syncTimes);
 
-export { validatingFormSubmit };
+export { validatingFormSubmit, blockSubmitButton };
