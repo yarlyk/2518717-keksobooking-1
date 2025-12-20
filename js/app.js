@@ -20,7 +20,7 @@ export const initApp = async () => {
       initImageUploadAvatar();
       initImageUploadAppartment();
       const data = await getData();
-      renderData(data);
+      renderData(data.slice(0,10));
     }
   } catch {
     showMessage('Не загружаются данные!');
