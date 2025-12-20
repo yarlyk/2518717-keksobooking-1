@@ -1,6 +1,6 @@
 import { SubmitButtonText } from './constants.js';
 import { avatarPreview, resetFotoAppartment } from './load-images.js';
-import { resetMainPin } from './map.js';
+import { closeAllPopups, resetMainPin } from './map.js';
 import { resetValidate, formAd } from './validate-form.js';
 
 const resetButton = document.querySelector('.ad-form__reset');
@@ -43,12 +43,14 @@ export const blockSubmitButton = (isDisabled = true) => {
 };
 
 export const resetForm = () => {
+  mapFilter.reset();
   formAd.reset();
   resetValidate();
   avatarPreview.src = 'img/muffin-grey.svg';
   avatarPreview.alt = 'Аватар пользователя';
   resetMainPin();
   resetFotoAppartment();
+  closeAllPopups();
 };
 
 resetButton.addEventListener('click', (evt) => {
