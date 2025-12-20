@@ -19,9 +19,17 @@ export const initImageUploadAvatar = () => {
   });
 };
 
+export const resetFotoAppartment = () => {
+  const img = fotoAppartmentPreview.querySelector('img');
+  if (img) {
+    img.remove();
+  }
+};
+
 export const initImageUploadAppartment = () => {
   fotoOfApartment.addEventListener('change', () => {
     const file = fotoOfApartment.files[0];
+    resetFotoAppartment();
 
     if (file) {
       const fileUrl = URL.createObjectURL(file);
@@ -33,13 +41,4 @@ export const initImageUploadAppartment = () => {
       fotoAppartmentPreview.appendChild(fotoAppartment);
     }
   });
-};
-
-export const resetFotoAppartment = () => {
-  const images = fotoAppartmentPreview.querySelectorAll('img');
-  if (images.length > 0) {
-    images.forEach((image) => {
-      image.remove();
-    });
-  }
 };
