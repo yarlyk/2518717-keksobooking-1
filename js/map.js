@@ -62,11 +62,6 @@ export const resetMainPin = () => {
   });
 };
 
-
-// setTimeout(() => {
-//   markerGroup.clearLayers();
-// }, 3000);
-
 const createMarker = (apartment) => {
   const { location: { lat, lng } } = apartment;
   const markerRandom = L.marker({
@@ -83,7 +78,6 @@ const createMarker = (apartment) => {
 };
 
 export const renderData = (apartments) => {
-  // console.log(apartments)
   apartments.forEach((apartment) => {
     createMarker(apartment);
   });

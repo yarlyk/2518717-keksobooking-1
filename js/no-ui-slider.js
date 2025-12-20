@@ -47,5 +47,3 @@ export const createUiSlider = () =>{
   // Отслеживаем изменения поля выбора типа жилья
   typeHousingSelect.addEventListener('change', updateSetUiSlider);
 };
-
-// export { createUiSlider };

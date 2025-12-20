@@ -12,10 +12,8 @@ export const initForm = () => {
         await sendAd(new FormData(formAd));
         resetForm();
         showMessage('Ваше объявление успешно размещено!');
-        // console.log('Всё ушло!!!');
       } catch {
         showMessage('Ошибка размещения объявления');
-        // console.log('Не ушло...');
       } finally {
         blockSubmitButton(false);
       }

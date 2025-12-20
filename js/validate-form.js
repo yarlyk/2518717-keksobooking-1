@@ -96,6 +96,3 @@ timeIn.addEventListener('change', syncTimes);
 timeOut.addEventListener('change', syncTimes);
 
 export const isValid = () => pristine.validate();
-
-{/* <div class="pristine-error text-help">Добавь.те, пожалуйта, ещё описание. Минимум 30 символов.</div> */}
-{/* <div class="pristine-error text-help">Количество гостей в одной комнате не может быть больше одного</div> */}

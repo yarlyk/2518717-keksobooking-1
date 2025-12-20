@@ -1,14 +1,11 @@
 export const avatarInput = document.querySelector('#avatar');
 export const avatarPreview = document.querySelector('.ad-form-header__preview img');
 export const fotoOfApartment = document.querySelector('#images');
+const fotoAppartmentPreview = document.querySelector('.ad-form__photo');
 
-
-//Добавляем атрибут accept в загрузчики, чтобы только изображения п.3.7 ТЗ
+//Добавляем атрибут accept в загрузчики, чтобы можно было загрузить только изображения п.3.7 ТЗ
 avatarInput.accept = 'image/jpeg, image/png, image/gif, image/webp';
 fotoOfApartment.accept = 'image/jpeg, image/png, image/gif, image/webp';
-
-const fotoAppartmentPreview = document.querySelector('.ad-form__photo');
-// const fotoAppartment = document.createElement('img');
 
 export const initImageUploadAvatar = () => {
   avatarInput.addEventListener('change', () => {
@@ -34,7 +31,6 @@ export const initImageUploadAppartment = () => {
       fotoAppartment.width = '70';
       fotoAppartment.height = '70';
       fotoAppartmentPreview.appendChild(fotoAppartment);
-      // console.log(fotoAppartmentPreview);
     }
   });
 };
