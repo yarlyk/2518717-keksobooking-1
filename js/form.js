@@ -1,29 +1,24 @@
-import { sendAd } from "./api.js";
-import { blockSubmitButton } from "./control-form.js";
-import { createUiSlider } from "./no-ui-slider.js";
-import { isValid } from "./validate-form.js";
-
-const validatingForm = document.querySelector('.ad-form');
+import { sendAd } from './api.js';
+import { blockSubmitButton, resetForm } from './control-form.js';
+import { showMessage } from './maker-massage-success-error.js';
+import { formAd, isValid } from './validate-form.js';
 
 export const initForm = () => {
-  validatingForm.addEventListener('submit', async (evt) => {
+  formAd.addEventListener('submit', async (evt) => {
     evt.preventDefault();
     if (isValid()) {
       blockSubmitButton();
       try {
-        await sendAd(new FormData(validatingForm));
-        // resetForm();
-        // showPopup(SUCCESS)
-        console.log('!!!!!')
+        await sendAd(new FormData(formAd));
+        resetForm();
+        showMessage('Ваше объявление успешно размещено!');
+        // console.log('Всё ушло!!!');
       } catch {
-        // showPopup(ERROR)
-        console.log('error??????')
+        showMessage('Ошибка размещения объявления');
+        // console.log('Не ушло...');
       } finally {
         blockSubmitButton(false);
       }
-
     }
   });
 };
-
-createUiSlider();

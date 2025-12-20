@@ -1,20 +1,21 @@
 import { BaseCoordinations, MAP_SCALE } from './constants.js';
 import { createCustomPopup } from './render-baloon.js';
 
- const addressMarker = document.querySelector('#address');
+const addressMarker = document.querySelector('#address');
 
 let map;
-
+let markerGroup;
+let marker;
 const ordinaryIcon = L.icon({
   iconUrl: './img/pin.svg',
-  iconSize: [52, 52],
-  iconAnchor: [26, 52],
+  iconSize: [40, 40],
+  iconAnchor: [20, 40],
 });
 
 export const initMap = () => new Promise((resolve) => {
   map = L.map('map-canvas')
     .on('load', () => {
-      resolve(true)
+      resolve(true);
     })
     .setView({
       lat: BaseCoordinations.LAT,
@@ -28,7 +29,7 @@ export const initMap = () => new Promise((resolve) => {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     },
   ).addTo(map);
-
+  markerGroup = L.layerGroup().addTo(map);
   // Указываем параметры главной метки
   const mainPinIcon = L.icon({
     iconUrl: './img/main-pin.svg',
@@ -36,14 +37,15 @@ export const initMap = () => new Promise((resolve) => {
     iconAnchor: [26, 52],
   });
 
-  const marker = L.marker(
+  marker = L.marker(
     {
       lat: BaseCoordinations.LAT,
       lng: BaseCoordinations.LNG
     },
     {
       draggable: true,
-      icon: mainPinIcon
+      icon: mainPinIcon,
+      zIndexOffset: 1000
     },
   ).addTo(map);
 
@@ -53,21 +55,42 @@ export const initMap = () => new Promise((resolve) => {
   });
 });
 
-export const renderData = (apartments) => {
-  console.log(apartments)
-  apartments.forEach((apartment) => {
-    const { location: { lat, lng } } = apartment;
-    const markerRandom = L.marker({
-      lat,
-      lng,
-    },
-      {
-        icon: ordinaryIcon
-      }
-    );
-    markerRandom
-      .addTo(map)
-      .bindPopup(createCustomPopup(apartment));
+export const resetMainPin = () => {
+  marker.setLatLng({
+    lat: 35.6854195988901,
+    lng: 139.7527348995209
   });
-}
+};
 
+
+// setTimeout(() => {
+//   markerGroup.clearLayers();
+// }, 3000);
+
+const createMarker = (apartment) => {
+  const { location: { lat, lng } } = apartment;
+  const markerRandom = L.marker({
+    lat,
+    lng,
+  },
+  {
+    icon: ordinaryIcon
+  }
+  );
+  markerRandom
+    .addTo(markerGroup)
+    .bindPopup(createCustomPopup(apartment));
+};
+
+export const renderData = (apartments) => {
+  // console.log(apartments)
+  apartments.forEach((apartment) => {
+    createMarker(apartment);
+  });
+
+};
+
+// export const mapReload = () => {
+//   // Закрываем все открытые попапы
+//   map.reload();
+// };

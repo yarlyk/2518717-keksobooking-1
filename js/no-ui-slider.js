@@ -5,14 +5,14 @@ const typeHousingSelect = document.querySelector('#type');
 
 // Объект с минимальными ценами для каждого типа жилья
 const MinPrices = {
-  PALACE: 10000,
-  FLAT: 1000,
-  HOUSE: 5000,
-  BUNGALOW: 0,
-  HOTEL: 3000
+  palace: 10000,
+  flat: 1000,
+  house: 5000,
+  bungalow: 0,
+  hotel: 3000
 };
 
-const createUiSlider = () =>{
+export const createUiSlider = () =>{
   //Создание слайдера в определённом элементе разметки
   noUiSlider.create(sliderElement, {
     range: {
@@ -48,4 +48,4 @@ const createUiSlider = () =>{
   typeHousingSelect.addEventListener('change', updateSetUiSlider);
 };
 
-export { createUiSlider };
+// export { createUiSlider };

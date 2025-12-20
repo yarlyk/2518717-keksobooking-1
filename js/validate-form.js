@@ -1,16 +1,9 @@
 // Находим элементы формы
-const validatingForm = document.querySelector('.ad-form');
+export const formAd = document.querySelector('.ad-form');
 const quantityRooms = document.querySelector('#room_number');
 const quantityGuests = document.querySelector('#capacity');
 const timeIn = document.querySelector('#timein');
 const timeOut = document.querySelector('#timeout');
-const avatarInput = document.querySelector('#avatar');
-const fotoOfApartment = document.querySelector('#images');
-const submitButton = document.querySelector('.ad-form__submit'); // Находим кнопку "Опубликовать"
-
-//Добавляем атрибут accept в загрузчики, чтобы только изображения п.3.7 ТЗ
-avatarInput.accept = 'image/jpeg, image/png, image/gif, image/webp';
-fotoOfApartment.accept = 'image/jpeg, image/png, image/gif, image/webp';
 
 //Определяем переменные для валидации комнат "Не для гостей"
 const notForGuests = 0;
@@ -20,11 +13,11 @@ const singleRoom = 1;
 
 /**
  * Экземпляр для валидации с объктом config в качестве второго параметра
- * @param { * } validatingForm - элемент формы для валидации
+ * @param { * } formAd - элемент формы для валидации
  * @param { object } config - объект с настройками валидации для формы
  * @param { boolean } - не заполнено (по умолчанию true), определяет производить валидацию по мере ввода или по нажатию кнопки "Отправить"
  */
-const pristine = new Pristine(validatingForm, {
+const pristine = new Pristine(formAd, {
   // class of the parent element where the error/success class is added
   classTo: 'ad-form__element',
   errorClass: 'has-danger',
@@ -80,6 +73,8 @@ const updateGuestConstraints = () => {
   pristine.validate(quantityGuests);
 };
 
+export const resetValidate = () => pristine.reset();
+
 /**
  * Функция для синхронизации значений полей Время заезда и Время выезда
  * @param { * } event - представляет собой любое событие, которое происходит в DOM
@@ -101,3 +96,6 @@ timeIn.addEventListener('change', syncTimes);
 timeOut.addEventListener('change', syncTimes);
 
 export const isValid = () => pristine.validate();
+
+{/* <div class="pristine-error text-help">Добавь.те, пожалуйта, ещё описание. Минимум 30 символов.</div> */}
+{/* <div class="pristine-error text-help">Количество гостей в одной комнате не может быть больше одного</div> */}

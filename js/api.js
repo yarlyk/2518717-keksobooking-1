@@ -1,14 +1,15 @@
 import { DataUrl, Method } from './constants.js';
+import { disableForm } from './control-form.js';
 
 const loader = (route, method = Method.GET, body = null) => fetch(route, {method, body})
   .then((response) => {
     if (!response.ok) {
-      throw new Error();
+      throw new Error(); //Здесь надо поставить вызов сообщения "Не удалось подключиться"
     }
     return response.json();
   })
   .catch(() => {
-    enableForm();
+    disableForm(false);
     throw new Error();
   });
 

@@ -1,60 +1,39 @@
 import { SubmitButtonText } from './constants.js';
+import { avatarPreview, resetFotoAppartment } from './load-images.js';
+import { resetMainPin } from './map.js';
+import { resetValidate, formAd } from './validate-form.js';
 
-
+const resetButton = document.querySelector('.ad-form__reset');
 const submitButton = document.querySelector('.ad-form__submit');
+const fieldSets = formAd.querySelectorAll('fieldset');
+const mapFilter = document.querySelector('.map__filters');
+const filters = mapFilter.querySelectorAll('fieldset');
+
 /**
- * Деактивирует форму подачи объявления
+ * Деактивирует форму подачи объявления с параметром по умолчанию. С параметром false активирует форму
  */
-export const disableForm = () => {
-  document.querySelector('.ad-form').classList.add('ad-form--disabled');
-  const findedElement = document.querySelector('.ad-form');
-  const fieldSets = findedElement.querySelectorAll('fieldset');
+export const disableForm = (isDisabled = true) => {
+  if (isDisabled) {
+    formAd.classList.add('ad-form--disabled');
+  } else {
+    formAd.classList.remove('ad-form--disabled');
+  }
   fieldSets.forEach((fieldSet) => {
-    fieldSet.disabled = true;
+    fieldSet.disabled = isDisabled;
   });
 };
 
 /**
- * Активирует форму подачи объявления
+ * Деактивирует форму фильтра с параметром по умолчанию. С параметром false активирует фильтр
  */
-export const enableForm = () => {
-  document.querySelector('.ad-form').classList.remove('ad-form--disabled');
-  const findedElement = document.querySelector('.ad-form');
-  const fieldSets = findedElement.querySelectorAll('fieldset');
-  fieldSets.forEach((fieldSet) => {
-    fieldSet.disabled = false;
-  });
-};
-
-/**
- * Деактивирует форму фильтра
- */
-export const disableFilter = () => {
-  document.querySelector('.map__filters').classList.add('ad-form--disabled');
-  const findedElement = document.querySelector('.map__filters');
-  let fieldSets = findedElement.querySelectorAll('fieldset');
-  fieldSets.forEach((fieldSet) => {
-    fieldSet.disabled = true;
-  });
-  fieldSets = findedElement.querySelectorAll('select');
-  fieldSets.forEach((fieldSet) => {
-    fieldSet.disabled = true;
-  });
-};
-
-/**
- * Активирует форму фильтра
- */
-export const enableFilter = () => {
-  document.querySelector('.map__filters').classList.remove('ad-form--disabled');
-  const findedElement = document.querySelector('.map__filters');
-  let fieldSets = findedElement.querySelectorAll('fieldset');
-  fieldSets.forEach((fieldSet) => {
-    fieldSet.disabled = false;
-  });
-  fieldSets = findedElement.querySelectorAll('select');
-  fieldSets.forEach((fieldSet) => {
-    fieldSet.disabled = false;
+export const disableFilter = (isDisabled = true) => {
+  if (isDisabled) {
+    mapFilter.classList.add('ad-form--disabled');
+  } else {
+    mapFilter.classList.remove('ad-form--disabled');
+  }
+  filters.forEach((filter) => {
+    filter.disabled = isDisabled;
   });
 };
 
@@ -63,6 +42,17 @@ export const blockSubmitButton = (isDisabled = true) => {
   submitButton.textContent = isDisabled ? SubmitButtonText.SENDING : SubmitButtonText.IDLE;
 };
 
+export const resetForm = () => {
+  formAd.reset();
+  resetValidate();
+  avatarPreview.src = 'img/muffin-grey.svg';
+  avatarPreview.alt = 'Аватар пользователя';
+  resetMainPin();
+  resetFotoAppartment();
+};
 
-
+resetButton.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  resetForm();
+});
 
