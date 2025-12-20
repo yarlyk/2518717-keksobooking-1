@@ -90,7 +90,8 @@ export const renderData = (apartments) => {
 
 };
 
-// export const mapReload = () => {
-//   // Закрываем все открытые попапы
-//   map.reload();
-// };
+export const closeAllPopups = () => {
+  if (map) {
+    map.closePopup();
+  }
+};
