@@ -36,8 +36,10 @@ export const initImageUploadAppartment = () => {
 };
 
 export const resetFotoAppartment = () => {
-  const img = fotoAppartmentPreview.querySelector('img');
-  if (img) {
-    img.remove();
+  const images = fotoAppartmentPreview.querySelectorAll('img');
+  if (images.length > 0) {
+    images.forEach((image) => {
+      image.remove();
+    });
   }
 };
