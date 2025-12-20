@@ -1,6 +1,6 @@
 import { SubmitButtonText } from './constants.js';
 import { avatarPreview, resetFotoAppartment } from './load-images.js';
-import { closeAllPopups, resetMainPin } from './map.js';
+import { closeAllPopups, resetMainPin, resetMap } from './map.js';
 import { resetValidate, formAd } from './validate-form.js';
 
 const resetButton = document.querySelector('.ad-form__reset');
@@ -42,7 +42,7 @@ export const blockSubmitButton = (isDisabled = true) => {
   submitButton.textContent = isDisabled ? SubmitButtonText.SENDING : SubmitButtonText.IDLE;
 };
 
-export const resetForm = () => {
+export const resetAll = () => {
   mapFilter.reset();
   formAd.reset();
   resetValidate();
@@ -51,10 +51,11 @@ export const resetForm = () => {
   resetMainPin();
   resetFotoAppartment();
   closeAllPopups();
+  resetMap();
 };
 
 resetButton.addEventListener('click', (evt) => {
   evt.preventDefault();
-  resetForm();
+  resetAll();
 });
 

@@ -62,6 +62,13 @@ export const resetMainPin = () => {
   });
 };
 
+export const resetMap = () => {
+  map.setView({
+    lat: BaseCoordinations.LAT,
+    lng: BaseCoordinations.LNG
+  }, MAP_SCALE);
+};
+
 const createMarker = (apartment) => {
   const { location: { lat, lng } } = apartment;
   const markerRandom = L.marker({
