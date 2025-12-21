@@ -1,6 +1,7 @@
 import { SubmitButtonText } from './constants.js';
 import { avatarPreview, resetFotoAppartment } from './load-images.js';
 import { closeAllPopups, resetMainPin, resetMap } from './map.js';
+import { updateSetUiSlider } from './no-ui-slider.js';
 import { resetValidate, formAd } from './validate-form.js';
 
 const resetButton = document.querySelector('.ad-form__reset');
@@ -45,6 +46,7 @@ export const blockSubmitButton = (isDisabled = true) => {
 export const resetAll = () => {
   mapFilter.reset();
   formAd.reset();
+  updateSetUiSlider();
   resetValidate();
   avatarPreview.src = 'img/muffin-grey.svg';
   avatarPreview.alt = 'Аватар пользователя';

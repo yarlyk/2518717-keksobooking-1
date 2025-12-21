@@ -5,21 +5,36 @@ const typeHousingSelect = document.querySelector('#type');
 
 // Объект с минимальными ценами для каждого типа жилья
 const MinPrices = {
-  palace: 10000,
-  flat: 1000,
-  house: 5000,
-  bungalow: 0,
-  hotel: 3000
+  PALACE: 10000,
+  FLAT: 1000,
+  HOUSE: 5000,
+  BUNGALOW: 0,
+  HOTEL: 3000
 };
 
-export const createUiSlider = () =>{
+/**
+* Функция обновления настроек слайдера
+*/
+export const updateSetUiSlider = () => {
+  const minPrice = MinPrices[typeHousingSelect.value.toUpperCase()];
+  // Обновляем настройки слайдера
+  sliderElement.noUiSlider.updateOptions({
+    range: {
+      min: minPrice,
+      max: 100000,
+    },
+    start: minPrice,
+  });
+};
+
+export const createUiSlider = () => {
   //Создание слайдера в определённом элементе разметки
   noUiSlider.create(sliderElement, {
     range: {
       min: 0,
       max: 100000,
     },
-    start: 1000,
+    start: MinPrices[typeHousingSelect.value.toUpperCase()],
     step: 100,
     connect: 'lower',
   });
@@ -32,17 +47,7 @@ export const createUiSlider = () =>{
   /**
    * Функция обновления настроек слайдера
    */
-  const updateSetUiSlider = () => {
-    const minPrice = MinPrices[typeHousingSelect.value];
-    // Обновляем настройки слайдера
-    sliderElement.noUiSlider.updateOptions({
-      range: {
-        min: minPrice,
-        max: 100000,
-      },
-      start: minPrice,
-    });
-  };
+  updateSetUiSlider();
 
   // Отслеживаем изменения поля выбора типа жилья
   typeHousingSelect.addEventListener('change', updateSetUiSlider);
