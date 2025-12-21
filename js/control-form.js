@@ -7,7 +7,7 @@ import { resetValidate, formAd } from './validate-form.js';
 const resetButton = document.querySelector('.ad-form__reset');
 const submitButton = document.querySelector('.ad-form__submit');
 const fieldSets = formAd.querySelectorAll('fieldset');
-const mapFilter = document.querySelector('.map__filters');
+export const mapFilter = document.querySelector('.map__filters');
 const filters = mapFilter.querySelectorAll('fieldset');
 
 /**

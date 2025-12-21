@@ -1,5 +1,6 @@
 import { getData } from './api.js';
 import { disableFilter, disableForm } from './control-form.js';
+import { initFilter } from './filter-sort.js';
 import { initForm } from './form.js';
 import { initImageUploadAppartment, initImageUploadAvatar } from './load-images.js';
 import { showMessage } from './maker-massage-success-error.js';
@@ -19,8 +20,10 @@ export const initApp = async () => {
       createUiSlider();
       initImageUploadAvatar();
       initImageUploadAppartment();
-      const data = await getData();
-      renderData(data.slice(0,10));
+      const strangerAds = await getData();
+      // console.log(strangerAds);
+      initFilter();
+      renderData(strangerAds.slice(0,10));
     }
   } catch {
     showMessage('Не загружаются данные!');
