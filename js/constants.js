@@ -22,8 +22,10 @@ export const Method = {
   POST: 'POST',
 };
 
-export const TextMessage = {
-  GET_DATA_ER: 'Не удаётся получить данные. Обратитесь в поддержку',
-  SEND_DATA_ER: 'Не удаётся отправить данные',
-  SUCCESSFUL_SENDING: 'Успешная отправка'
-};
+// export const TextMessage = {
+//   GET_DATA_ER: 'Не удаётся получить данные. Обратитесь в поддержку',
+//   SEND_DATA_ER: 'Не удаётся отправить данные',
+//   SUCCESSFUL_SENDING: 'Успешная отправка'
+// };
+
+export const FILE_IMAGE_TYPES = ['jpg', 'jpeg', 'png', 'webp'];
