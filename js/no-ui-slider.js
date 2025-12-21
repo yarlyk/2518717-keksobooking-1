@@ -44,9 +44,6 @@ export const createUiSlider = () => {
     priceInput.value = sliderElement.noUiSlider.get();
   });
 
-  /**
-   * Функция обновления настроек слайдера
-   */
   updateSetUiSlider();
 
   // Отслеживаем изменения поля выбора типа жилья
