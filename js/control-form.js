@@ -60,4 +60,3 @@ resetButton.addEventListener('click', (evt) => {
   evt.preventDefault();
   resetAll();
 });
-
