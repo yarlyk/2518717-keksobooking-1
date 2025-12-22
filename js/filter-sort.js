@@ -52,11 +52,15 @@ const filterArr = (checkingArr) => {
           // Используем функцию-колбэк в some()
           const isIt = element.offer.features.some((feature) => feature === elem);
           if (isIt) {
-            checkedArr.push(element);
+            const isIn = checkedArr.includes(element);
+            if (!isIn) {
+              checkedArr.push(element);
+            }
           }
         }
       });
     });
+    // console.log(checkedArr);
     // Возвращаем отфильтрованный массив
     return checkedArr;
   }
