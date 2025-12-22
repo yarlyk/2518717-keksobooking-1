@@ -1,7 +1,8 @@
 import { strangerAds } from './app.js';
-import { FILTER_TYPES } from './constants.js';
+import { FILTER_TYPES, RERENDER_DELAY } from './constants.js';
 import { mapFilter } from './control-form.js';
 import { makeLayer, markerGroup, renderData } from './map.js';
+import { debounce } from './utils.js';
 
 const setFilter = {
   offer: {
@@ -96,11 +97,17 @@ const filterOffers = (filter) => (offerItem) => {
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 export const initFilter = (checkingArr) => {
   renderData(strangerAds.slice(0, 10));
-  mapFilter.addEventListener('change', (evt) => {
-    makeSetFilter(evt);
+
+  // Создаем debounce-версию функции фильтрации
+  const debouncedFilterHandler = debounce(() => {
     markerGroup.remove();
     makeLayer();
     const filteredArr = checkingArr.filter(filterOffers(setFilter));
     renderData(filteredArr.slice(0, 10));
+  }, RERENDER_DELAY);
+
+  mapFilter.addEventListener('change', (evt) => {
+    makeSetFilter(evt);
+    debouncedFilterHandler();
   });
 };

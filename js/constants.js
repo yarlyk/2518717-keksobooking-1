@@ -31,3 +31,5 @@ export const Method = {
 export const FILE_IMAGE_TYPES = ['jpg', 'jpeg', 'png', 'webp'];
 
 export const FILTER_TYPES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+
+export const RERENDER_DELAY = 1000;
