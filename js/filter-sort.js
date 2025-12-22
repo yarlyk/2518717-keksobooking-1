@@ -2,15 +2,23 @@ import { FILTER_TYPES } from './constants.js';
 import { mapFilter } from './control-form.js';
 
 const setFilter = {
-  'offer': {
+  offer: {
+    type: 'any',
+    price: 'any',
+    rooms: 'any',
+    guests: 'any',
     features: []
-  }
-  // 'housing-type': 'flat',
-  // 'housing-price': 'middle',
-  // 'housing-rooms': '1',
-  // 'housing-guests': '2',
+  },
 };
 
+export function resetSetFilter() {
+  setFilter.offer.type = 'any';
+  setFilter.offer.rooms = 'any';
+  setFilter.offer.price = 'any';
+  setFilter.offer.guests = 'any';
+  setFilter.offer.features = [];
+}
+// resetSetFilter();
 // const getingData = {
 //   'offer': {
 //     'guests': 1,
@@ -21,22 +29,28 @@ const setFilter = {
 //   }
 // };
 
-export const initFilter = () => {
-  mapFilter.addEventListener('change', (evt) => {
-    const matches = FILTER_TYPES.some((it) => evt.target.value.endsWith(it));
-    if (matches) {
-      if (evt.target.checked) {
-        const isIt = setFilter.offer.features.includes(evt.target.value);
-        if (!isIt) {
-          setFilter.offer.features.push(evt.target.value);
-        }
-      } else {
-        const index = setFilter.offer.features.indexOf(evt.target.value); // находим индекс элемента, который планируем удалить
-        setFilter.offer.features.splice(index, 1); // удаляем 1 элемент, начиная с индекса index
+function makeSetFilter(evt) {
+  const matches = FILTER_TYPES.some((it) => evt.target.value === it);
+  if (matches) {
+    if (evt.target.checked) {
+      const isIt = setFilter.offer.features.includes(evt.target.value);
+      if (!isIt) {
+        setFilter.offer.features.push(evt.target.value);
       }
     } else {
-      setFilter.offer[evt.target.id] = evt.target.value;
+      const index = setFilter.offer.features.indexOf(evt.target.value); // находим индекс элемента, который планируем удалить
+      setFilter.offer.features.splice(index, 1); // удаляем 1 элемент, начиная с индекса index
     }
-    // console.log(setFilter);
+  } else {
+    const filterType = evt.target.id.replace('housing-', '');
+    setFilter.offer[filterType] = evt.target.value;
+  }
+  console.log(setFilter);
+}
+
+export const initFilter = () => {
+  mapFilter.addEventListener('change', (evt) => {
+    makeSetFilter(evt);
+
   });
 };
