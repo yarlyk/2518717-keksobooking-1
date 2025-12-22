@@ -4,7 +4,10 @@ import { createCustomPopup } from './render-baloon.js';
 const addressMarker = document.querySelector('#address');
 
 let map;
-let markerGroup;
+export let markerGroup;
+export const makeLayer = () => {
+  markerGroup = L.layerGroup().addTo(map);
+};
 let marker;
 const ordinaryIcon = L.icon({
   iconUrl: './img/pin.svg',
@@ -29,7 +32,7 @@ export const initMap = () => new Promise((resolve) => {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     },
   ).addTo(map);
-  markerGroup = L.layerGroup().addTo(map);
+  makeLayer();
   // Указываем параметры главной метки
   const mainPinIcon = L.icon({
     iconUrl: './img/main-pin.svg',
@@ -54,6 +57,8 @@ export const initMap = () => new Promise((resolve) => {
     addressMarker.value = `${geoMarker.lat}, ${geoMarker.lng}`;
   });
 });
+
+// export let filterGroup;
 
 export const resetMainPin = () => {
   marker.setLatLng({
@@ -88,7 +93,6 @@ export const renderData = (apartments) => {
   apartments.forEach((apartment) => {
     createMarker(apartment);
   });
-
 };
 
 export const closeAllPopups = () => {

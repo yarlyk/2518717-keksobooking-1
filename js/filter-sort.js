@@ -1,5 +1,7 @@
+import { strangerAds } from './app.js';
 import { FILTER_TYPES } from './constants.js';
 import { mapFilter } from './control-form.js';
+import { makeLayer, markerGroup, renderData } from './map.js';
 
 const setFilter = {
   offer: {
@@ -11,25 +13,18 @@ const setFilter = {
   },
 };
 
-export function resetSetFilter() {
+export const resetSetFilter = () => {
+  markerGroup.remove();
+  makeLayer();
+  renderData(strangerAds.slice(0, 10));
   setFilter.offer.type = 'any';
   setFilter.offer.rooms = 'any';
   setFilter.offer.price = 'any';
   setFilter.offer.guests = 'any';
   setFilter.offer.features = [];
-}
-// resetSetFilter();
-// const getingData = {
-//   'offer': {
-//     'guests': 1,
-//     'price': 7500,
-//     'rooms': 1,
-//     'type': 'palace',
-//     'features': ['washer', 'elevator', 'wifi', 'dishwasher', 'conditioner']
-//   }
-// };
+};
 
-function makeSetFilter(evt) {
+const makeSetFilter = (evt) => {
   const matches = FILTER_TYPES.some((it) => evt.target.value === it);
   if (matches) {
     if (evt.target.checked) {
@@ -45,12 +40,37 @@ function makeSetFilter(evt) {
     const filterType = evt.target.id.replace('housing-', '');
     setFilter.offer[filterType] = evt.target.value;
   }
-  console.log(setFilter);
-}
+};
 
-export const initFilter = () => {
+const filterArr = (checkingArr) => {
+  const checkedArr = [];
+  // Проверяем, есть ли фильтры
+  if (setFilter.offer.features.length > 0) {
+    setFilter.offer.features.forEach((elem) => {
+      checkingArr.forEach((element) => {
+        if (element.offer.features) {
+          // Используем функцию-колбэк в some()
+          const isIt = element.offer.features.some((feature) => feature === elem);
+          if (isIt) {
+            checkedArr.push(element);
+          }
+        }
+      });
+    });
+    // Возвращаем отфильтрованный массив
+    return checkedArr;
+  }
+  // Если фильтров нет, возвращаем все объявления
+  return strangerAds;
+};
+
+export const initFilter = (checkingArr) => {
+  renderData(strangerAds.slice(0, 10));
   mapFilter.addEventListener('change', (evt) => {
     makeSetFilter(evt);
-
+    markerGroup.remove();
+    makeLayer();
+    const filteredArr = filterArr(checkingArr);
+    renderData(filteredArr.slice(0, 10));
   });
 };

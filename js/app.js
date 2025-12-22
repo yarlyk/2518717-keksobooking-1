@@ -4,11 +4,12 @@ import { initFilter } from './filter-sort.js';
 import { initForm } from './form.js';
 import { initImageUploadAppartment, initImageUploadAvatar } from './load-images.js';
 import { showMessage } from './maker-massage-success-error.js';
-import { initMap, renderData } from './map.js';
+import { initMap } from './map.js';
 import { createUiSlider } from './no-ui-slider.js';
 
 disableForm();
 disableFilter();
+export let strangerAds;
 
 export const initApp = async () => {
   try {
@@ -20,10 +21,10 @@ export const initApp = async () => {
       createUiSlider();
       initImageUploadAvatar();
       initImageUploadAppartment();
-      const strangerAds = await getData();
+      strangerAds = await getData();
       // console.log(strangerAds);
-      initFilter();
-      renderData(strangerAds.slice(0,10));
+      initFilter(strangerAds);
+      // renderData(strangerAds.slice(0,10));
     }
   } catch {
     showMessage('Не загружаются данные!');
