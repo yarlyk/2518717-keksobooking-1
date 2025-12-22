@@ -23,7 +23,7 @@ export const resetSetFilter = () => {
   setFilter.offer.guests = 'any';
   setFilter.offer.features = [];
 };
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 const makeSetFilter = (evt) => {
   const matches = FILTER_TYPES.some((it) => evt.target.value === it);
   if (matches) {
@@ -41,44 +41,66 @@ const makeSetFilter = (evt) => {
     setFilter.offer[filterType] = evt.target.value;
   }
 };
-
-const filterArr = (checkingArr) => {
-  const checkedArr = [];
-  // Проверяем, есть ли фильтры
-  if (setFilter.offer.features.length > 0) {
-    // Добавляем рейтинг каждому элементу
-    checkingArr.forEach((element) => {
-      element.rating = 0; // Инициализируем рейтинг
-      setFilter.offer.features.forEach((filterFeature) => {
-        if (element.offer.features && element.offer.features.includes(filterFeature)) {
-          element.rating++; // Увеличиваем рейтинг при совпадении
-        }
-      });
-      // Если элемент имеет хотя бы одно совпадение, добавляем его
-      if (element.rating > 0) {
-        const isIn = checkedArr.includes(element);
-        if (!isIn) {
-          checkedArr.push(element);
-        }
-      }
-      // console.log(element);
-      // console.log('Рейтинг этого элемента = ' + element.rating);
-    });
-    // Сортируем по рейтингу (по желанию)
-    checkedArr.sort((a, b) => b.rating - a.rating);
-    return checkedArr;
+//////////////////////////////////////////////////////////////////////////////////////////
+const filterOffers = (filter) => (offerItem) => {
+  const { type, price, rooms, guests, features } = filter.offer;
+  const offer = offerItem.offer;
+  // Проверка типа
+  if (type !== 'any' && offer.type !== type) {
+    return false;
   }
-  // Если фильтров нет, возвращаем все объявления
-  return strangerAds;
+  // Проверка цены
+  if (price !== 'any') {
+    const offerPrice = offer.price;
+    switch (price) {
+      case 'low':
+        if (offerPrice >= 10000) {
+          return false;
+        }
+        break;
+      case 'middle':
+        if (offerPrice < 10000 || offerPrice > 50000) {
+          return false;
+        }
+        break;
+      case 'high':
+        if (offerPrice < 50000) {
+          return false;
+        }
+        break;
+    }
+  }
+  // Проверка количества комнат
+  if (rooms !== 'any' && offer.rooms !== +rooms) {
+    return false;
+  }
+  // Проверка количества гостей
+  if (guests !== 'any' && offer.guests !== +guests) {
+    return false;
+  }
+  // Проверка удобств
+  if (features.length > 0) {
+    // Если в объекте нет удобств, а в фильтре есть - не подходит
+    if (!offer.features || offer.features.length === 0) {
+      return false;
+    }
+    // Все удобства из фильтра должны быть в объекте
+    for (const feature of features) {
+      if (!offer.features.includes(feature)) {
+        return false;
+      }
+    }
+  }
+  return true;
 };
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////
 export const initFilter = (checkingArr) => {
   renderData(strangerAds.slice(0, 10));
   mapFilter.addEventListener('change', (evt) => {
     makeSetFilter(evt);
     markerGroup.remove();
     makeLayer();
-    const filteredArr = filterArr(checkingArr);
+    const filteredArr = checkingArr.filter(filterOffers(setFilter));
     renderData(filteredArr.slice(0, 10));
   });
 };
