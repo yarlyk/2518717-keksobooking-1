@@ -46,22 +46,26 @@ const filterArr = (checkingArr) => {
   const checkedArr = [];
   // Проверяем, есть ли фильтры
   if (setFilter.offer.features.length > 0) {
-    setFilter.offer.features.forEach((elem) => {
-      checkingArr.forEach((element) => {
-        if (element.offer.features) {
-          // Используем функцию-колбэк в some()
-          const isIt = element.offer.features.some((feature) => feature === elem);
-          if (isIt) {
-            const isIn = checkedArr.includes(element);
-            if (!isIn) {
-              checkedArr.push(element);
-            }
-          }
+    // Добавляем рейтинг каждому элементу
+    checkingArr.forEach((element) => {
+      element.rating = 0; // Инициализируем рейтинг
+      setFilter.offer.features.forEach((filterFeature) => {
+        if (element.offer.features && element.offer.features.includes(filterFeature)) {
+          element.rating++; // Увеличиваем рейтинг при совпадении
         }
       });
+      // Если элемент имеет хотя бы одно совпадение, добавляем его
+      if (element.rating > 0) {
+        const isIn = checkedArr.includes(element);
+        if (!isIn) {
+          checkedArr.push(element);
+        }
+      }
+      // console.log(element);
+      // console.log('Рейтинг этого элемента = ' + element.rating);
     });
-    // console.log(checkedArr);
-    // Возвращаем отфильтрованный массив
+    // Сортируем по рейтингу (по желанию)
+    checkedArr.sort((a, b) => b.rating - a.rating);
     return checkedArr;
   }
   // Если фильтров нет, возвращаем все объявления
