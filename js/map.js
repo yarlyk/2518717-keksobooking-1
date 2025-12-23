@@ -54,7 +54,7 @@ export const initMap = () => new Promise((resolve) => {
 
   marker.on('moveend', (evt) => {
     const geoMarker = evt.target.getLatLng();
-    addressMarker.value = `${geoMarker.lat}, ${geoMarker.lng}`;
+    addressMarker.value = `${geoMarker.lat.toFixed(5)}, ${geoMarker.lng.toFixed(5)}`;
   });
 });
 
