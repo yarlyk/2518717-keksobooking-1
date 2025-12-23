@@ -1,6 +1,91 @@
+// Функция для отображения успешного сообщения
+export const showSuccessMessage = () => {
+  const successTemplate = document.querySelector('#success').content.cloneNode(true);
+  const successElement = successTemplate.querySelector('.success');
 
+  // Добавляем сообщение перед закрывающим тегом body
+  document.body.appendChild(successElement);
+
+  // Функция для закрытия сообщения
+  const closeMessage = () => {
+    successElement.remove();
+  };
+
+  // Обработчик нажатия клавиши Esc
+  const onEscKeyDown = (evt) => {
+    if (evt.key === 'Escape') {
+      closeMessage();
+    }
+  };
+
+  // Обработчик клика по произвольной области экрана
+  const onClickOutside = (evt) => {
+    if (successElement.contains(evt.target)) {
+      closeMessage();
+    }
+  };
+
+  // Добавляем обработчики событий
+  document.addEventListener('keydown', onEscKeyDown);
+  document.addEventListener('click', onClickOutside);
+
+  // Удаляем обработчики при удалении элемента
+  successElement.addEventListener('remove', () => {
+    document.removeEventListener('keydown', onEscKeyDown);
+    document.removeEventListener('click', onClickOutside);
+  });
+};
+
+// Функция для отображения сообщения об ошибке
+export const showErrorMessage = () => {
+  const errorTemplate = document.querySelector('#error').content.cloneNode(true);
+  const errorElement = errorTemplate.querySelector('.error');
+
+  // Добавляем сообщение перед закрывающим тегом body
+  document.body.appendChild(errorElement);
+
+  // Функция для закрытия сообщения
+  const closeMessage = () => {
+    errorElement.remove();
+  };
+
+  // Обработчик нажатия клавиши Esc
+  const onEscKeyDown = (evt) => {
+    if (evt.key === 'Escape') {
+      closeMessage();
+    }
+  };
+
+  // Обработчик клика по произвольной области экрана
+  const onClickOutside = (evt) => {
+    if (errorElement.contains(evt.target)) {
+      closeMessage();
+    }
+  };
+
+  // Обработчик клика по кнопке
+  const onButtonClick = () => {
+    closeMessage();
+  };
+
+  // Находим кнопку в сообщении об ошибке
+  const errorButton = errorElement.querySelector('.error__button');
+
+  // Добавляем обработчики событий
+  document.addEventListener('keydown', onEscKeyDown);
+  document.addEventListener('click', onClickOutside);
+  errorButton.addEventListener('click', onButtonClick);
+
+  // Удаляем обработчики при удалении элемента
+  errorElement.addEventListener('remove', () => {
+    document.removeEventListener('keydown', onEscKeyDown);
+    document.removeEventListener('click', onClickOutside);
+    errorButton.removeEventListener('click', onButtonClick);
+  });
+};
+// /////////////////////////////////////////////////////////////////////////////////////////
 // Задаем время показа сообщения об ошибке
-const timeShowMessage = 2000;
+const timeShowMessage = 3000;
 
 /**
  * Функция для отображения ошибки с отсчетом времени
@@ -29,20 +114,16 @@ export const showMessage = (message) => {
   // Объявляю переменную для обратного отсчёта
   let timeLeft = timeShowMessage / 1000;
 
-  // const text1 = document.createTextNode('Агент Хант, это сообщение самоуничтожится');
-  const text2 = document.createTextNode('');
-  // const br = document.createElement('br');
+  const text = document.createTextNode('');
 
-  // timeElement.appendChild(text1);
-  // timeElement.appendChild(br);
-  timeElement.appendChild(text2);
+  timeElement.appendChild(text);
 
   /**
  * Функция для обновления текста обратного отсчёта
   * @param {Number} timeLeft - время в секундах, через которое сообщение самоуничтожится
  */
   const updateCountdown = () => {
-    text2.textContent = `Закроется через ${timeLeft} сек.`;
+    text.textContent = `Закроется через ${timeLeft} сек.`;
   };
 
   updateCountdown();
@@ -62,14 +143,13 @@ export const showMessage = (message) => {
   errorButton.addEventListener('click', () => {
     clearInterval(countdownInterval);
     errorElement.remove();
-    window.location.reload(); // Перезагружаем страницу
+    // window.location.reload(); // Перезагружаем страницу
   });
 
   // Добавляем ошибку в DOM
   document.body.appendChild(errorElement);
 
-  // Добавляем самоуничтожение сообщения об ошибке через установленный интервал времени и
-  // снимаем блокировку с фильтра и формы отправки объявления
+  // Добавляем самоуничтожение сообщения об ошибке через установленный интервал времени
   const autoRemoveTimeout = setTimeout(() => {
     errorElement.remove();
   }, timeShowMessage);
@@ -78,5 +158,6 @@ export const showMessage = (message) => {
   errorElement.addEventListener('remove', () => {
     clearInterval(countdownInterval);
     clearTimeout(autoRemoveTimeout);
+    errorButton.removeEventListener('click');
   });
 };
