@@ -113,9 +113,9 @@ export const showMessage = (message) => {
 
   // Объявляю переменную для обратного отсчёта
   let timeLeft = timeShowMessage / 1000;
-
+  // Создаём пустую строку для сообщения
   const text = document.createTextNode('');
-
+  // Размещаем сообщение перед элементом
   timeElement.appendChild(text);
 
   /**

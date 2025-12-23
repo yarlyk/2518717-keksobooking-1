@@ -4,6 +4,7 @@ const roomTemplate = document.querySelector('#card').content.querySelector('.pop
 
 const qtyGuests = ['гостя', 'гостей'];
 const qtyRooms = ['комната', 'комнаты', 'комнат'];
+// Перечисление типов аппартаментов для перевода
 const TypeLocationNamed = {
   PALACE: 'Дворец',
   FLAT: 'Квартира',
@@ -11,7 +12,11 @@ const TypeLocationNamed = {
   BUNGALOW: 'Бунгало',
   HOTEL: 'Отель',
 };
-
+/**
+ *Создаёт попап
+ * @param {Object} point - объект с данными аппартамента
+ * @returns - возвращает блок с данными попап
+ */
 export const createCustomPopup = (point) => {
   const roomElement = roomTemplate.cloneNode(true);
   const { offer: { title, price, type, checkin, checkout, address, rooms, guests, features = [], description, photos }, author: { avatar } } = point;

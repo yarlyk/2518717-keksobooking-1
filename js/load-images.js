@@ -8,7 +8,9 @@ const fotoAppartmentPreview = document.querySelector('.ad-form__photo');
 //Добавляем атрибут accept в загрузчики, чтобы можно было загрузить только изображения п.3.7 ТЗ
 avatarInput.accept = 'image/jpeg, image/png, image/jpg, image/webp';
 fotoOfApartment.accept = 'image/jpeg, image/png, image/jpg, image/webp';
-
+/**
+ * Загружает изображение аватара
+ */
 export const initImageUploadAvatar = () => {
   avatarInput.addEventListener('change', () => {
     const file = avatarInput.files[0];
@@ -22,14 +24,18 @@ export const initImageUploadAvatar = () => {
     }
   });
 };
-
+/**
+ * Удаляет фото аппартамента при сбросе формы
+ */
 export const resetFotoAppartment = () => {
   const img = fotoAppartmentPreview.querySelector('img');
   if (img) {
     img.remove();
   }
 };
-
+/**
+ * Загружает фото аппартамента
+ */
 export const initImageUploadAppartment = () => {
   fotoOfApartment.addEventListener('change', () => {
     const file = fotoOfApartment.files[0];

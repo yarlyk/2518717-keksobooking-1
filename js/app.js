@@ -6,11 +6,14 @@ import { initImageUploadAppartment, initImageUploadAvatar } from './load-images.
 import { showMessage } from './maker-massage-success-error.js';
 import { initMap } from './map.js';
 import { createUiSlider } from './no-ui-slider.js';
-// import { debounce } from './utils.js';
 
 disableForm();
 disableFilter();
 export let strangerAds;
+
+/**
+ * Функция последовательной загрузки. Сначала инициализация карты, после успешной загрузки снимает блокировки
+ */
 
 export const initApp = async () => {
   try {

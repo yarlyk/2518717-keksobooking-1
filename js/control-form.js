@@ -38,12 +38,17 @@ export const disableFilter = (isDisabled = true) => {
     filter.disabled = isDisabled;
   });
 };
-
+/**
+ *Функция блокировки кнопки на время отправки данных - заменяет название кнопки на время отправки
+ * @param {Boolean} isDisabled - меняет состояние блокировки кнопки
+ */
 export const blockSubmitButton = (isDisabled = true) => {
   submitButton.disabled = isDisabled;
   submitButton.textContent = isDisabled ? SubmitButtonText.SENDING : SubmitButtonText.IDLE;
 };
-
+/**
+ * Функция сброса к исходным данным меток на карте, фильтра, балуна, формы объявления
+ */
 export const resetAll = () => {
   mapFilter.reset();
   formAd.reset();
@@ -57,7 +62,9 @@ export const resetAll = () => {
   resetMap();
   resetSetFilter();
 };
-
+/**
+ * Обработчик клика по кнопке Очистить
+ */
 resetButton.addEventListener('click', (evt) => {
   evt.preventDefault();
   resetAll();
