@@ -58,8 +58,6 @@ export const initMap = () => new Promise((resolve) => {
   });
 });
 
-// export let filterGroup;
-
 export const resetMainPin = () => {
   marker.setLatLng({
     lat: 35.6854195988901,

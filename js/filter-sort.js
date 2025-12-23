@@ -24,7 +24,7 @@ export const resetSetFilter = () => {
   setFilter.offer.guests = 'any';
   setFilter.offer.features = [];
 };
-////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 const makeSetFilter = (evt) => {
   const matches = FILTER_TYPES.some((it) => evt.target.value === it);
   if (matches) {
@@ -42,7 +42,7 @@ const makeSetFilter = (evt) => {
     setFilter.offer[filterType] = evt.target.value;
   }
 };
-//////////////////////////////////////////////////////////////////////////////////////////
+
 const filterOffers = (filter) => (offerItem) => {
   const { type, price, rooms, guests, features } = filter.offer;
   const offer = offerItem.offer;
@@ -94,7 +94,7 @@ const filterOffers = (filter) => (offerItem) => {
   }
   return true;
 };
-/////////////////////////////////////////////////////////////////////////////////////////////////////
+
 export const initFilter = (checkingArr) => {
   renderData(strangerAds.slice(0, 10));
 

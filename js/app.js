@@ -23,9 +23,7 @@ export const initApp = async () => {
       initImageUploadAvatar();
       initImageUploadAppartment();
       strangerAds = await getData();
-      // console.log(strangerAds);
       initFilter(strangerAds);
-      // renderData(strangerAds.slice(0,10));
     }
   } catch {
     showMessage('Не загружаются данные!');

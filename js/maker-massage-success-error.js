@@ -83,7 +83,7 @@ export const showErrorMessage = () => {
     errorButton.removeEventListener('click', onButtonClick);
   });
 };
-// /////////////////////////////////////////////////////////////////////////////////////////
+
 // Задаем время показа сообщения об ошибке
 const timeShowMessage = 3000;
 
