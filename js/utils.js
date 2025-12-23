@@ -20,6 +20,7 @@ export const getDeclension = (arr, element) => {
   }
   return arr[2];
 };
+
 // Шаблон функции для устранения "дребезга"
 export const debounce = (callback, timeoutDelay) => {
   let timeoutId;
