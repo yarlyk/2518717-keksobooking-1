@@ -4,7 +4,6 @@ import { mapFilter } from './control-form.js';
 import { makeLayer, markerGroup, renderData } from './map.js';
 import { debounce } from './utils.js';
 
-// Образцовый объект для фильтрации
 const setFilter = {
   offer: {
     type: 'any',
