@@ -13,9 +13,7 @@ const setFilter = {
     features: []
   },
 };
-/**
- * Функция сброса фильтра
- */
+
 export const resetSetFilter = () => {
   markerGroup.remove();
   makeLayer();
@@ -26,10 +24,7 @@ export const resetSetFilter = () => {
   setFilter.offer.guests = 'any';
   setFilter.offer.features = [];
 };
-/**
- *Готовит объект с данными для фильтрации
- * @param {*} evt - событие при клике в фильтр
- */
+
 const makeSetFilter = (evt) => {
   const matches = FILTER_TYPES.some((it) => evt.target.value === it);
   if (matches) {
@@ -47,19 +42,13 @@ const makeSetFilter = (evt) => {
     setFilter.offer[filterType] = evt.target.value;
   }
 };
-/**
- *Для фильтрации массива данных с сервера
- * @param {*} filter - для фильтрации полученных данных в соответствии с выбранным фильтром
- * @returns
- */
+
 const filterOffers = (filter) => (offerItem) => {
   const { type, price, rooms, guests, features } = filter.offer;
   const offer = offerItem.offer;
-  // Проверка типа
   if (type !== 'any' && offer.type !== type) {
     return false;
   }
-  // Проверка цены
   if (price !== 'any') {
     const offerPrice = offer.price;
     switch (price) {
@@ -80,21 +69,16 @@ const filterOffers = (filter) => (offerItem) => {
         break;
     }
   }
-  // Проверка количества комнат
   if (rooms !== 'any' && offer.rooms !== +rooms) {
     return false;
   }
-  // Проверка количества гостей
   if (guests !== 'any' && offer.guests !== +guests) {
     return false;
   }
-  // Проверка удобств
   if (features.length > 0) {
-    // Если в объекте нет удобств, а в фильтре есть - не подходит
     if (!offer.features || offer.features.length === 0) {
       return false;
     }
-    // Все удобства из фильтра должны быть в объекте
     for (const feature of features) {
       if (!offer.features.includes(feature)) {
         return false;
@@ -103,14 +87,9 @@ const filterOffers = (filter) => (offerItem) => {
   }
   return true;
 };
-/**
- *Инициализирует фильтрацию. Удаляет при необходимости слой и создаёт новый
- * @param {Array} checkingArr - входящий массив данных для фильтрации
- */
+
 export const initFilter = (checkingArr) => {
   renderData(strangerAds.slice(0, 10));
-
-  // Создаем debounce-версию функции фильтрации
   const debouncedFilterHandler = debounce(() => {
     markerGroup.remove();
     makeLayer();

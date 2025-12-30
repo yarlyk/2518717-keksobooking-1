@@ -11,22 +11,18 @@ disableForm();
 disableFilter();
 export let strangerAds;
 
-/**
- * Функция последовательной загрузки. Сначала инициализация карты, после успешной загрузки снимает блокировки
- */
-
 export const initApp = async () => {
   try {
     const isMapLoad = await initMap();
     if (isMapLoad) {
+      strangerAds = await getData();
+      initFilter(strangerAds);
       disableForm(false);
       disableFilter(false);
       initForm();
       createUiSlider();
       initImageUploadAvatar();
       initImageUploadAppartment();
-      strangerAds = await getData();
-      initFilter(strangerAds);
     }
   } catch {
     showMessage('Не загружаются данные!');

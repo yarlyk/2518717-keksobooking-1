@@ -1,9 +1,7 @@
-//Находим элементы на странице
 const sliderElement = document.querySelector('.ad-form__slider');
 const priceInput = document.querySelector('#price');
 const typeHousingSelect = document.querySelector('#type');
 
-// Объект с минимальными ценами для каждого типа жилья
 const MinPrices = {
   PALACE: 10000,
   FLAT: 1000,
@@ -12,12 +10,8 @@ const MinPrices = {
   HOTEL: 3000
 };
 
-/**
-* Функция обновления настроек слайдера
-*/
 export const updateSetUiSlider = () => {
   const minPrice = MinPrices[typeHousingSelect.value.toUpperCase()];
-  // Обновляем настройки слайдера
   sliderElement.noUiSlider.updateOptions({
     range: {
       min: minPrice,
@@ -28,7 +22,7 @@ export const updateSetUiSlider = () => {
 };
 
 export const createUiSlider = () => {
-  //Создание слайдера в определённом элементе разметки
+
   noUiSlider.create(sliderElement, {
     range: {
       min: 0,
@@ -39,13 +33,11 @@ export const createUiSlider = () => {
     connect: 'lower',
   });
 
-  // Получение значений положения слайдера
   sliderElement.noUiSlider.on('update', () => {
     priceInput.value = sliderElement.noUiSlider.get();
   });
 
   updateSetUiSlider();
 
-  // Отслеживаем изменения поля выбора типа жилья
   typeHousingSelect.addEventListener('change', updateSetUiSlider);
 };

@@ -4,7 +4,6 @@ const roomTemplate = document.querySelector('#card').content.querySelector('.pop
 
 const qtyGuests = ['гостя', 'гостей'];
 const qtyRooms = ['комната', 'комнаты', 'комнат'];
-// Перечисление типов аппартаментов для перевода
 const TypeLocationNamed = {
   PALACE: 'Дворец',
   FLAT: 'Квартира',
@@ -12,11 +11,7 @@ const TypeLocationNamed = {
   BUNGALOW: 'Бунгало',
   HOTEL: 'Отель',
 };
-/**
- *Создаёт попап
- * @param {Object} point - объект с данными аппартамента
- * @returns - возвращает блок с данными попап
- */
+
 export const createCustomPopup = (point) => {
   const roomElement = roomTemplate.cloneNode(true);
   const { offer: { title, price, type, checkin, checkout, address, rooms, guests, features = [], description, photos }, author: { avatar } } = point;
@@ -29,26 +24,24 @@ export const createCustomPopup = (point) => {
   roomElement.querySelector('.popup__text--time').textContent = `Заезд после ${checkin}, выезд до ${checkout}`;
   roomElement.querySelector('.popup__description').textContent = description;
 
-  // Заполняем удобства
   const featuresContainer = roomElement.querySelector('.popup__features');
-  featuresContainer.innerHTML = ''; // Очищаем контейнер
+  featuresContainer.innerHTML = '';
 
-  if (Array.isArray(features) && features.length > 0) {
+  if (features.length > 0) {
     features.forEach((feature) => {
       const featureItem = document.createElement('li');
       featureItem.classList.add('popup__feature', `popup__feature--${feature}`);
       featuresContainer.appendChild(featureItem);
     });
   } else {
-    // Если features отсутствует или пустой, можно добавить сообщение или оставить контейнер пустым
+
     const noFeaturesItem = document.createElement('li');
     noFeaturesItem.textContent = 'Нет доступных удобств';
     featuresContainer.appendChild(noFeaturesItem);
   }
 
-  // Заполняем фотографии
   const photosContainer = roomElement.querySelector('.popup__photos');
-  photosContainer.innerHTML = ''; // Очищаем контейнер
+  photosContainer.innerHTML = '';
   if (Array.isArray(photos) && photos.length > 0) {
     photos.forEach((photo) => {
       const photoElement = document.createElement('img');
@@ -61,7 +54,6 @@ export const createCustomPopup = (point) => {
     });
   }
 
-  // Устанавливаем аватар
   roomElement.querySelector('.popup__avatar').src = avatar;
 
   return roomElement;
