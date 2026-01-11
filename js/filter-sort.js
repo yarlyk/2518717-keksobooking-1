@@ -1,8 +1,10 @@
-import { strangerAds } from './app.js';
-import { FILTER_TYPES, RERENDER_DELAY } from './constants.js';
-import { mapFilter } from './control-form.js';
-import { makeLayer, markerGroup, renderData } from './map.js';
+import { CheckPrice, FILTER_TYPES, FLATS_COUNT, RERENDER_DELAY } from './constants.js';
+import { renderData } from './map.js';
 import { debounce } from './utils.js';
+
+const mapFilter = document.querySelector('.map__filters');
+
+let localFlats;
 
 const setFilter = {
   offer: {
@@ -15,9 +17,7 @@ const setFilter = {
 };
 
 export const resetSetFilter = () => {
-  markerGroup.remove();
-  makeLayer();
-  renderData(strangerAds.slice(0, 10));
+  renderData(localFlats.slice(0, FLATS_COUNT));
   setFilter.offer.type = 'any';
   setFilter.offer.rooms = 'any';
   setFilter.offer.price = 'any';
@@ -34,8 +34,8 @@ const makeSetFilter = (evt) => {
         setFilter.offer.features.push(evt.target.value);
       }
     } else {
-      const index = setFilter.offer.features.indexOf(evt.target.value); // находим индекс элемента, который планируем удалить
-      setFilter.offer.features.splice(index, 1); // удаляем 1 элемент, начиная с индекса index
+      const index = setFilter.offer.features.indexOf(evt.target.value);
+      setFilter.offer.features.splice(index, 1);
     }
   } else {
     const filterType = evt.target.id.replace('housing-', '');
@@ -50,23 +50,8 @@ const filterOffers = (filter) => (offerItem) => {
     return false;
   }
   if (price !== 'any') {
-    const offerPrice = offer.price;
-    switch (price) {
-      case 'low':
-        if (offerPrice >= 10000) {
-          return false;
-        }
-        break;
-      case 'middle':
-        if (offerPrice < 10000 || offerPrice > 50000) {
-          return false;
-        }
-        break;
-      case 'high':
-        if (offerPrice < 50000) {
-          return false;
-        }
-        break;
+    if (!CheckPrice[price](offer.price)) {
+      return false;
     }
   }
   if (rooms !== 'any' && offer.rooms !== +rooms) {
@@ -88,17 +73,18 @@ const filterOffers = (filter) => (offerItem) => {
   return true;
 };
 
-export const initFilter = (checkingArr) => {
-  renderData(strangerAds.slice(0, 10));
-  const debouncedFilterHandler = debounce(() => {
-    markerGroup.remove();
-    makeLayer();
-    const filteredArr = checkingArr.filter(filterOffers(setFilter));
-    renderData(filteredArr.slice(0, 10));
-  }, RERENDER_DELAY);
+const debouncedFilterHandler = debounce(() => {
+  const filteredArr = localFlats.filter(filterOffers(setFilter));
+  renderData(filteredArr.slice(0, FLATS_COUNT));
+}, RERENDER_DELAY);
 
-  mapFilter.addEventListener('change', (evt) => {
-    makeSetFilter(evt);
-    debouncedFilterHandler();
-  });
+mapFilter.addEventListener('change', (evt) => {
+  makeSetFilter(evt);
+  debouncedFilterHandler();
+});
+
+
+export const initFilter = (flats) => {
+  localFlats = [...flats];
+  renderData(localFlats.slice(0, FLATS_COUNT));
 };

@@ -4,12 +4,12 @@ import { createCustomPopup } from './render-baloon.js';
 const addressMarker = document.querySelector('#address');
 
 let map;
-export let markerGroup;
+let markerGroup;
+let marker;
 
 export const makeLayer = () => {
   markerGroup = L.layerGroup().addTo(map);
 };
-let marker;
 
 const ordinaryIcon = L.icon({
   iconUrl: './img/pin.svg',
@@ -90,6 +90,7 @@ const createMarker = (apartment) => {
 };
 
 export const renderData = (apartments) => {
+  markerGroup.clearLayers();
   apartments.forEach((apartment) => {
     createMarker(apartment);
   });

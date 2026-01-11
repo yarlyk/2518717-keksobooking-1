@@ -11,9 +11,7 @@ const fieldSets = formAd.querySelectorAll('fieldset');
 export const mapFilter = document.querySelector('.map__filters');
 const filters = mapFilter.querySelectorAll('fieldset');
 
-/**
- * Деактивирует форму подачи объявления с параметром по умолчанию. С параметром false активирует форму
- */
+
 export const disableForm = (isDisabled = true) => {
   if (isDisabled) {
     formAd.classList.add('ad-form--disabled');
@@ -33,6 +31,18 @@ export const disableFilter = (isDisabled = true) => {
   }
   filters.forEach((filter) => {
     filter.disabled = isDisabled;
+  });
+};
+
+export const disableElement = (element, isDisabled = true) => {
+  if (isDisabled) {
+    element.classList.add('ad-form--disabled');
+  } else {
+    element.classList.remove('ad-form--disabled');
+  }
+  const fieldsets = element.querySelectorAll('fieldset');
+  fieldsets.forEach((fieldset) => {
+    fieldset.disabled = isDisabled;
   });
 };
 

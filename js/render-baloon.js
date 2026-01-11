@@ -22,7 +22,12 @@ export const createCustomPopup = (point) => {
   roomElement.querySelector('.popup__type').textContent = TypeLocationNamed[type.toUpperCase()];
   roomElement.querySelector('.popup__text--capacity').textContent = `${rooms} ${getDeclension(qtyRooms, rooms)} для ${guests} ${getDeclension(qtyGuests, guests)}`;
   roomElement.querySelector('.popup__text--time').textContent = `Заезд после ${checkin}, выезд до ${checkout}`;
-  roomElement.querySelector('.popup__description').textContent = description;
+  if (!description || !description.length) {
+    roomElement.querySelector('.popup__description').remove();
+  } else {
+    roomElement.querySelector('.popup__description').textContent = description;
+  }
+
 
   const featuresContainer = roomElement.querySelector('.popup__features');
   featuresContainer.innerHTML = '';

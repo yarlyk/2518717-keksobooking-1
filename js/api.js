@@ -1,7 +1,9 @@
 import { DataUrl, Method } from './constants.js';
-import { disableForm } from './control-form.js';
+import { disableElement } from './control-form.js';
 
-const loader = (route, method = Method.GET, body = null) => fetch(route, {method, body})
+const formAd = document.querySelector('.ad-form');
+
+const createRequest = (route, method = Method.GET, body = null) => fetch(route, {method, body})
   .then((response) => {
     if (!response.ok) {
       throw new Error();
@@ -9,10 +11,10 @@ const loader = (route, method = Method.GET, body = null) => fetch(route, {method
     return response.json();
   })
   .catch(() => {
-    disableForm(false);
+    disableElement(formAd, false);
     throw new Error();
   });
 
-export const getData = () => loader(DataUrl.GET_DATA_URL);
+export const getData = () => createRequest(DataUrl.GET_DATA_URL);
 
-export const sendAd = (body) => loader(DataUrl.SEND_DATA_URL, Method.POST, body);
+export const sendAd = (body) => createRequest(DataUrl.SEND_DATA_URL, Method.POST, body);

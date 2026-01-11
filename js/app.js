@@ -1,30 +1,31 @@
 import { getData } from './api.js';
-import { disableFilter, disableForm } from './control-form.js';
+import { disableElement} from './control-form.js';
 import { initFilter } from './filter-sort.js';
 import { initForm } from './form.js';
 import { initImageUploadAppartment, initImageUploadAvatar } from './load-images.js';
-import { showMessage } from './maker-massage-success-error.js';
+import { showMessage } from './popup-message-maker.js';
 import { initMap } from './map.js';
-import { createUiSlider } from './no-ui-slider.js';
 
-disableForm();
-disableFilter();
-export let strangerAds;
+const formAd = document.querySelector('.ad-form');
+const mapFilter = document.querySelector('.map__filters');
+
+disableElement(formAd);
+disableElement(mapFilter);
 
 export const initApp = async () => {
   try {
     const isMapLoad = await initMap();
     if (isMapLoad) {
-      strangerAds = await getData();
-      initFilter(strangerAds);
-      disableForm(false);
-      disableFilter(false);
+      disableElement(formAd, false);
       initForm();
-      createUiSlider();
       initImageUploadAvatar();
       initImageUploadAppartment();
+
+      const strangerAds = await getData();
+      initFilter(strangerAds);
+      disableElement(mapFilter, false);
     }
-  } catch {
+  } catch (e) {
     showMessage('Не загружаются данные!');
   }
 };

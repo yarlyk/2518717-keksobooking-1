@@ -1,6 +1,7 @@
 import { sendAd } from './api.js';
+import { POPUPS } from './constants.js';
 import { blockSubmitButton, resetAll } from './control-form.js';
-import { showErrorMessage, showSuccessMessage } from './maker-massage-success-error.js';
+import { showPopup} from './popup-message-maker.js';
 import { formAd, isValid } from './validate-form.js';
 
 export const initForm = () => {
@@ -11,9 +12,9 @@ export const initForm = () => {
       try {
         await sendAd(new FormData(formAd));
         resetAll();
-        showSuccessMessage();
+        showPopup(POPUPS.SUCCESS);
       } catch {
-        showErrorMessage();
+        showPopup(POPUPS.ERROR);
       } finally {
         blockSubmitButton(false);
       }
