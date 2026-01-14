@@ -1,5 +1,5 @@
 import { SubmitButtonText } from './constants.js';
-import { resetSetFilter } from './filter-sort.js';
+import { resetSetFilter } from './filter.js';
 import { avatarPreview, resetFotoAppartment } from './load-images.js';
 import { closeAllPopups, resetMainPin, resetMap } from './map.js';
 import { updateSetUiSlider } from './no-ui-slider.js';

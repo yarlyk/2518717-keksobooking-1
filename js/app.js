@@ -1,6 +1,6 @@
 import { getData } from './api.js';
 import { disableElement} from './control-form.js';
-import { initFilter } from './filter-sort.js';
+import { initFilter } from './filter.js';
 import { initForm } from './form.js';
 import { initImageUploadAppartment, initImageUploadAvatar } from './load-images.js';
 import { showMessage } from './popup-message-maker.js';
