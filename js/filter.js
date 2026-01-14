@@ -4,7 +4,7 @@ import { debounce } from './utils.js';
 
 const mapFilter = document.querySelector('.map__filters');
 
-let localFlats;
+let localFlats = [];
 
 const setFilter = {
   offer: {

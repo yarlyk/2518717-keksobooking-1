@@ -41,10 +41,9 @@ export const showPopup = (type) => {
 };
 
 export const showMessage = (message) => {
-  const erTemplate = document.querySelector('#error').content.cloneNode(true);
-  const errorElement = erTemplate.querySelector('.error');
-  const errorMessage = errorElement.querySelector('.error__message');
-  const errorButton = errorElement.querySelector('.error__button');
+  const alert = errorTemplate.cloneNode(true);
+  const errorMessage = alert.querySelector('.error__message');
+  const errorButton = alert.querySelector('.error__button');
   const timeElement = document.createElement('div');
 
   timeElement.style.cssText = `
@@ -80,17 +79,17 @@ export const showMessage = (message) => {
 
   errorButton.addEventListener('click', () => {
     clearInterval(countdownInterval);
-    errorElement.remove();
+    alert.remove();
     location.reload(true);
   });
 
-  document.body.appendChild(errorElement);
+  document.body.appendChild(alert);
 
   const autoRemoveTimeout = setTimeout(() => {
-    errorElement.remove();
+    alert.remove();
   }, timeShowMessage);
 
-  errorElement.addEventListener('remove', () => {
+  alert.addEventListener('remove', () => {
     clearInterval(countdownInterval);
     clearTimeout(autoRemoveTimeout);
     errorButton.removeEventListener('click');

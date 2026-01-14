@@ -7,32 +7,7 @@ import { resetValidate, formAd } from './validate-form.js';
 
 const resetButton = document.querySelector('.ad-form__reset');
 const submitButton = document.querySelector('.ad-form__submit');
-const fieldSets = formAd.querySelectorAll('fieldset');
 export const mapFilter = document.querySelector('.map__filters');
-const filters = mapFilter.querySelectorAll('fieldset');
-
-
-export const disableForm = (isDisabled = true) => {
-  if (isDisabled) {
-    formAd.classList.add('ad-form--disabled');
-  } else {
-    formAd.classList.remove('ad-form--disabled');
-  }
-  fieldSets.forEach((fieldSet) => {
-    fieldSet.disabled = isDisabled;
-  });
-};
-
-export const disableFilter = (isDisabled = true) => {
-  if (isDisabled) {
-    mapFilter.classList.add('ad-form--disabled');
-  } else {
-    mapFilter.classList.remove('ad-form--disabled');
-  }
-  filters.forEach((filter) => {
-    filter.disabled = isDisabled;
-  });
-};
 
 export const disableElement = (element, isDisabled = true) => {
   if (isDisabled) {
