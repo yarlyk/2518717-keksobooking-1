@@ -80,6 +80,10 @@ const syncTimes = (event) => {
   }
 };
 
+type.addEventListener('change', () => {
+  pristine.validate(price);
+});
+
 quantityRooms.addEventListener('change', updateGuestConstraints);
 timeIn.addEventListener('change', syncTimes);
 timeOut.addEventListener('change', syncTimes);

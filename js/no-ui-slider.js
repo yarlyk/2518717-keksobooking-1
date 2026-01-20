@@ -19,7 +19,6 @@ let currentStatePrice = 0;
 export const updateSetUiSlider = () => {
   const minPrice = MinPrices[typeHousingSelect.value.toUpperCase()];
   priceInput.placeholder = `от ${minPrice}`;
-  sliderElement.noUiSlider.updateOptions({ start: minPrice });
 };
 
 noUiSlider.create(sliderElement, {
@@ -51,12 +50,13 @@ priceInput.addEventListener('input', ({ target }) => {
 });
 
 sliderElement.noUiSlider.on('update', () => {
+  const value = sliderElement.noUiSlider.get();
   if (currentStatePrice < 0) {
     priceInput.value = '';
   } else {
-    priceInput.value = sliderElement.noUiSlider.get();
+    priceInput.value = value;
   }
-
+  currentStatePrice = value;
   validateField(priceInput);
 });
 

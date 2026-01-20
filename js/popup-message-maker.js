@@ -85,13 +85,8 @@ export const showMessage = (message) => {
 
   document.body.appendChild(alert);
 
-  const autoRemoveTimeout = setTimeout(() => {
+  setTimeout(() => {
     alert.remove();
-  }, timeShowMessage);
-
-  alert.addEventListener('remove', () => {
     clearInterval(countdownInterval);
-    clearTimeout(autoRemoveTimeout);
-    errorButton.removeEventListener('click');
-  });
+  }, timeShowMessage);
 };
